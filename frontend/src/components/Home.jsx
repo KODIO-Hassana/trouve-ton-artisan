@@ -42,7 +42,7 @@ function Home() {
                         topArtisans.map((artisan) => (
                             <article key={artisan.id} className="carte-artisan">
                                 <Link to={`/artisan/${artisan.id}`} className="lien-carte">
-                                    {/* <img src={artisan.image} alt={artisan.nom} /> */}
+                                    <img src={artisan.image} alt={artisan.nom} />
                                     <div className="infos-artisan">
                                         <h3>{artisan.nom}</h3>
                                         <p className="metier">{artisan.metier}</p>

@@ -78,6 +78,7 @@ app.get('/api/artisans/:id', (req, res) => {
             a.description_artisan AS description,
             a.email_artisan AS email,
             a.site_web_artisan AS site,
+            a.image AS image,
             a.is_top_artisan AS top
         FROM ARTISAN a
         JOIN SPECIALITE s ON a.id_specialite = s.id_specialite

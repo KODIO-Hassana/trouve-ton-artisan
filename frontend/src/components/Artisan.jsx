@@ -47,7 +47,7 @@ function Artisan() {
     return (
         <main className="page-artisan">
             <section className="en-tete-artisan">
-                {/* <img src={artisan.image} alt={artisan.nom} className="photo-profil-artisan" /> */}
+                <img src={artisan.image} alt={artisan.nom} className="photo-profil-artisan" />
                 <div className="titre-artisan">
                     <h1>{artisan.nom}</h1>
                     <p className="metier">{artisan.metier}</p>
@@ -85,7 +85,7 @@ function Artisan() {
                             )}
                         </li>
                     </ul>
-                    
+
                     <button className="btn-contact">Envoyer un message</button>
                 </aside>
             </section>
