@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Contact = () => {
-  // On crée un état pour stocker les données tapées par l'utilisateur
+  // État pour stocker les données tapées par l'utilisateur
   const [formData, setFormData] = useState({
     nom: '',
     email: '',
@@ -9,45 +9,75 @@ const Contact = () => {
     message: ''
   });
 
-  // On crée un état pour afficher un message de succès après l'envoi
+  // État pour afficher un message de succès après l'envoi
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Fonction qui met à jour les données à chaque fois qu'on tape au clavier
+  // Fonction qui met à jour les données
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Fonction déclenchée quand on clique sur le bouton "Envoyer"
+  // Fonction déclenchée quand on clique sur "Envoyer"
   const handleSubmit = (e) => {
-    e.preventDefault(); // Empêche la page de se recharger
-    
-    // Simulation d'envoi pour la démonstration au jury
+    e.preventDefault();
     console.log("Message général envoyé :", formData);
-    
-    // On affiche le message de remerciement
     setIsSubmitted(true);
-    
-    // On vide le formulaire
     setFormData({ nom: '', email: '', sujet: '', message: '' });
   };
 
   return (
-    <div className="container contact-page" style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Nous contacter</h2>
-      <p style={{ textAlign: 'center', marginBottom: '40px' }}>
-        Vous avez une question générale sur la plateforme Trouve Ton Artisan ? Écrivez-nous !
-      </p>
-      
+    <div style={{ 
+      padding: '40px', 
+      maxWidth: '800px', 
+      margin: '40px auto', 
+      backgroundColor: '#ffffff', 
+      borderRadius: '8px', 
+      boxShadow: '0 4px 15px rgba(0,0,0,0.05)', /* La même ombre élégante */
+      textAlign: 'left', 
+      color: '#333'
+    }}>
+      <h1 style={{ 
+        textAlign: 'center', 
+        color: '#2c3e50', 
+        marginBottom: '40px',
+        fontSize: '2rem'
+      }}>
+        Contactez-nous
+      </h1>
+
       {isSubmitted ? (
-        <div style={{ backgroundColor: '#d4edda', color: '#155724', padding: '20px', borderRadius: '5px', textAlign: 'center' }}>
-          <p><strong>Merci !</strong> Votre message a bien été envoyé. Notre équipe vous répondra dans les plus brefs délais.</p>
+        <div style={{ 
+          padding: '20px', 
+          backgroundColor: '#d4edda', 
+          color: '#155724', 
+          borderRadius: '6px', 
+          textAlign: 'center',
+          border: '1px solid #c3e6cb'
+        }}>
+          <h3 style={{ marginBottom: '10px' }}>Merci pour votre message !</h3>
+          <p>Votre demande a bien été envoyée. Nous vous répondrons dans les plus brefs délais.</p>
+          <button 
+            onClick={() => setIsSubmitted(false)}
+            style={{ 
+              marginTop: '20px', 
+              padding: '10px 20px', 
+              backgroundColor: '#28a745', 
+              color: 'white', 
+              border: 'none', 
+              borderRadius: '4px', 
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+          >
+            Envoyer un autre message
+          </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="nom" style={{ marginBottom: '5px', fontWeight: 'bold' }}>Votre nom :</label>
+            <label htmlFor="nom" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Nom :</label>
             <input 
               type="text" 
               id="nom" 
@@ -55,12 +85,12 @@ const Contact = () => {
               value={formData.nom} 
               onChange={handleChange} 
               required 
-              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
             />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="email" style={{ marginBottom: '5px', fontWeight: 'bold' }}>Votre adresse email :</label>
+            <label htmlFor="email" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Email :</label>
             <input 
               type="email" 
               id="email" 
@@ -68,12 +98,12 @@ const Contact = () => {
               value={formData.email} 
               onChange={handleChange} 
               required 
-              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
             />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="sujet" style={{ marginBottom: '5px', fontWeight: 'bold' }}>Sujet :</label>
+            <label htmlFor="sujet" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Sujet :</label>
             <input 
               type="text" 
               id="sujet" 
@@ -81,12 +111,12 @@ const Contact = () => {
               value={formData.sujet} 
               onChange={handleChange} 
               required 
-              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
             />
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="message" style={{ marginBottom: '5px', fontWeight: 'bold' }}>Message :</label>
+            <label htmlFor="message" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Message :</label>
             <textarea 
               id="message" 
               name="message" 
@@ -94,20 +124,21 @@ const Contact = () => {
               value={formData.message} 
               onChange={handleChange} 
               required 
-              style={{ padding: '10px', borderRadius: '4px', border: '1px solid #ccc', resize: 'vertical' }}
+              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', resize: 'vertical', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
             ></textarea>
           </div>
 
           <button 
             type="submit" 
             style={{ 
-              padding: '12px 20px', 
-              backgroundColor: '#007bff', 
+              padding: '15px 20px', 
+              backgroundColor: '#3498db', 
               color: 'white', 
               border: 'none', 
-              borderRadius: '4px', 
+              borderRadius: '6px', 
               cursor: 'pointer', 
               fontWeight: 'bold',
+              fontSize: '1.1rem',
               marginTop: '10px'
             }}>
             Envoyer le message

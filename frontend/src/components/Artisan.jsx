@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async'; // L'import est ajouté ici
 
 function Artisan() {
-    // 1. On récupère l'ID dans l'URL (ex: /artisan/2 -> id = "2")
+    // 1. On récupère l'ID dans l'URL
     const { id } = useParams();
     
     // 2. On crée des états pour stocker les données et gérer le chargement
@@ -46,6 +47,29 @@ function Artisan() {
     // 6. Affichage final avec les vraies données
     return (
         <main className="page-artisan">
+            {/* LE BLOC SEO DYNAMIQUE EST PLACÉ ICI */}
+            {/* <Helmet>
+                <title>{artisan.nom} - {artisan.metier} à {artisan.ville}</title>
+                <meta 
+                    name="description" 
+                    content={`Découvrez ${artisan.nom}, ${artisan.metier} situé à ${artisan.ville}. Contactez-le pour vos projets !`} 
+                />
+            </Helmet> */}
+
+            {/* <Helmet>
+                <title>Test SEO Artisan</title>
+                <meta name="description" content="Test de description" />
+            </Helmet> */}
+ 
+            <Helmet>
+                {/* On englobe tout dans des backticks et on utilise les ${} */}
+                <title>{`${artisan.nom} - ${artisan.metier} à ${artisan.ville}`}</title>
+                <meta 
+                    name="description" 
+                    content={`Découvrez ${artisan.nom}, ${artisan.metier} situé à ${artisan.ville}. Contactez-le pour vos projets !`} 
+                />
+            </Helmet>
+
             <section className="en-tete-artisan">
                 <img src={artisan.image} alt={artisan.nom} className="photo-profil-artisan" />
                 <div className="titre-artisan">
@@ -66,16 +90,10 @@ function Artisan() {
 
                 <aside className="contact-artisan">
                     <h2>Contact</h2>
-                    {/* <ul>
-                        <li><strong>Email :</strong> {artisan.email}</li>
-                        <li><strong>Site web :</strong> <a href={artisan.site.startsWith('http') ? artisan.site : `https://${artisan.site}`} target="_blank" rel="noreferrer">{artisan.site}</a></li>
-                    </ul> */}
-
                     <ul>
                         <li><strong>Email :</strong> {artisan.email}</li>
                         <li>
                             <strong>Site web :</strong>{' '}
-                            {/* On vérifie d'abord si l'artisan a un site (s'il n'est pas null) */}
                             {artisan.site ? (
                                 <a href={artisan.site.startsWith('http') ? artisan.site : `https://${artisan.site}`} target="_blank" rel="noreferrer">
                                     {artisan.site}
