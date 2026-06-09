@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// 1. AJOUT DE L'IMPORT HELMET ICI :
-import { Helmet } from 'react-helmet-async'; 
+import { Helmet } from 'react-helmet-async';
 
 function Home() {
     // 1. On crée un état pour stocker uniquement les artisans à la une
@@ -21,12 +20,10 @@ function Home() {
 
     return (
         <main>
-            {/* 2. AJOUT DU BLOC SEO ICI : */}
             <Helmet>
                 <title>Trouve Ton Artisan - Accueil</title>
                 <meta name="description" content="Annuaire des artisans du bâtiment, des services, de la fabrication et de l'alimentation en région Auvergne-Rhône-Alpes." />
             </Helmet>
-
              {/* Section Bannière  */}
             <section className="banniere-accueil">
                 <div className="contenu-banniere">
