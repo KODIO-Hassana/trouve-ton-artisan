@@ -32,6 +32,7 @@ function Header() {
                             <Link to={`/artisans/${categorie}`}>{categorie}</Link>
                         </li>
                     ))}
+                   <li><Link to="/contact">Contact</Link></li> 
                 </ul>
             </nav>
         </header>
