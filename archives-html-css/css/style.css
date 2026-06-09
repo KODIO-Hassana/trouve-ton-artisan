@@ -1,0 +1,223 @@
+/* --- RESET ET BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif; /* Tu pourras changer la police plus tard */
+    color: #333333;
+    line-height: 1.6;
+}
+
+/* --- BANNIERE PRINCIPALE --- */
+.banniere-accueil {
+    /* C'est ici que l'on appelle l'image. 
+       Attention au chemin : on sort du dossier css (..) puis on va dans assets/img/ */
+    background-image: url('../assets/img/banniere-accueil.jpg');
+    
+    /* On s'assure que l'image couvre toute la zone sans se déformer */
+    background-size: cover;
+    background-position: center;
+    
+    /* On donne une hauteur à cette zone pour qu'elle soit bien visible */
+    height: 60vh; /* 60% de la hauteur de l'écran */
+    
+    /* On utilise Flexbox pour centrer le texte et la barre de recherche au milieu de l'image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* Couleur du texte en blanc pour contraster avec la photo */
+    color: #ffffff; 
+}
+
+/* --- EN-TÊTE ET NAVIGATION --- */
+header {
+    background-color: #ffffff;
+    padding: 15px 50px; /* Espace en haut/bas et sur les côtés */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Petite ombre légère sous le menu */
+}
+
+.navigation-principale {
+    display: flex;
+    justify-content: space-between; /* Pousse le logo à gauche et le menu à droite */
+    align-items: center; /* Centre tout parfaitement à la verticale */
+}
+
+.logo-container img {
+    height: 60px; /* Ajuste cette valeur si ton logo est trop grand ou trop petit */
+}
+
+/* --- LE MENU --- */
+.menu {
+    display: flex; /* Aligne les liens du menu à l'horizontale */
+    list-style-type: none; /* Enlève les vilaines puces de la liste */
+    gap: 30px; /* Crée un espace propre entre chaque lien */
+}
+
+.menu a {
+    text-decoration: none; /* Enlève le soulignement bleu par défaut des liens */
+    color: #333333;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Prépare une petite animation fluide */
+}
+
+.menu a:hover {
+    color: #007BFF; /* La couleur quand on passe la souris dessus (le fameux survol !) */
+}
+
+/* --- TEXTES DE LA BANNIÈRE --- */
+.contenu-banniere h1 {
+    font-size: 3rem; /* Un grand titre bien visible */
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Une petite ombre pour qu'il reste lisible même sur une photo claire */
+}
+
+.contenu-banniere p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* --- BARRE DE RECHERCHE --- */
+.barre-recherche {
+    display: flex;
+    justify-content: center;
+}
+
+.barre-recherche input {
+    padding: 15px 20px;
+    width: 350px;
+    border: none;
+    border-radius: 5px 0 0 5px; /* Arrondi seulement à gauche */
+    font-size: 1rem;
+    outline: none; /* Enlève la bordure bleue quand on clique dedans */
+}
+
+.barre-recherche button {
+    padding: 15px 30px;
+    background-color: #007BFF; /* Le bleu interactif standard */
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0; /* Arrondi seulement à droite */
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.barre-recherche button:hover {
+    background-color: #0056b3; /* Un bleu un peu plus foncé au survol */
+}
+
+/* --- SECTION ARTISANS À LA UNE --- */
+.artisans-a-la-une {
+    padding: 60px 50px;
+    background-color: #f9f9f9; /* Un petit fond gris très clair pour faire ressortir les cartes blanches */
+}
+
+.artisans-a-la-une h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+}
+
+/* --- LA GRILLE --- */
+.grille-artisans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Crée exactement 3 colonnes de largeur égale */
+    gap: 30px; /* L'espace entre chaque carte */
+    max-width: 1200px; /* Empêche la grille de devenir trop large sur les très grands écrans */
+    margin: 0 auto; /* Centre la grille horizontalement */
+}
+
+/* --- DESIGN DES CARTES --- */
+.carte-artisan {
+    background-color: #ffffff;
+    border-radius: 10px; /* Arrondit les angles de la carte */
+    overflow: hidden; /* Coupe les coins de l'image qui dépasseraient de l'arrondi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Une petite ombre portée douce */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Animation au survol de la carte entière */
+.carte-artisan:hover {
+    transform: translateY(-5px); /* Fait "sauter" la carte légèrement vers le haut */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Accentue l'ombre */
+}
+
+/* Le lien caché sur la carte de la chocolaterie */
+.lien-carte {
+    text-decoration: none; /* Enlève le soulignement */
+    color: inherit; /* Demande au texte de garder sa couleur noire normale */
+    display: block; /* Rend toute la zone cliquable */
+}
+
+/* --- IMAGES ET TEXTES DES CARTES --- */
+.carte-artisan img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Recadre l'image proprement pour qu'elle remplisse l'espace sans s'écraser */
+}
+
+.infos-artisan {
+    padding: 20px;
+}
+
+.infos-artisan h3 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+.metier {
+    color: #666666;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.ville {
+    font-weight: 600;
+}
+
+.note {
+    color: #f39c12; /* Une belle couleur dorée pour les étoiles */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* --- PIED DE PAGE (FOOTER) --- */
+footer {
+    background-color: #333333; /* Un fond gris foncé classique pour bien délimiter la fin du site */
+    color: #ffffff; /* Texte en blanc pour le contraste */
+    padding: 40px 50px 20px;
+    text-align: center;
+}
+
+.liens-footer {
+    display: flex;
+    justify-content: center; /* Centre tous les liens */
+    gap: 25px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Sécurité : permet aux liens de passer à la ligne si l'écran est trop petit */
+}
+
+.liens-footer a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.liens-footer a:hover {
+    color: #007BFF; /* Rappel du bleu de ton bouton de recherche */
+}
+
+.copyright {
+    font-size: 0.85rem;
+    color: #aaaaaa;
+    border-top: 1px solid #555555; /* Une fine ligne séparatrice au-dessus du copyright */
+    padding-top: 20px;
+}
