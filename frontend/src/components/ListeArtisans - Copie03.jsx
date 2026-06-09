@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async'; // 1. L'import est ajouté ici
 
 function ListeArtisans() {
     const [artisans, setArtisans] = useState([]);
@@ -23,30 +22,14 @@ function ListeArtisans() {
 
     return (
         <main className="page-liste-artisans">
-            
-            {/* 3. LE BLOC SEO DYNAMIQUE */}
-            <Helmet>
-                <title>
-                    {categorie 
-                        ? `Artisans en ${categorie} - Trouve Ton Artisan` 
-                        : `Tous nos artisans - Trouve Ton Artisan`}
-                </title>
-                <meta 
-                    name="description" 
-                    content={categorie 
-                        ? `Consultez la liste de nos artisans qualifiés dans le domaine : ${categorie}.` 
-                        : `Découvrez l'annuaire complet de nos artisans dans la région Auvergne-Rhône-Alpes.`} 
-                />
-            </Helmet>
-
             <section className="artisans-a-la-une">
-                {/* 4. On affiche un titre dynamique pour savoir où on est ! */}
+                {/* 3. On affiche un titre dynamique pour savoir où on est ! */}
                 <h1 style={{ textAlign: 'center', marginTop: '40px', marginBottom: '30px' }}>
                     {categorie ? `Nos artisans : ${categorie}` : "Tous nos artisans"}
                 </h1>
                 
                 <div className="grille-artisans">
-                    {/* 5. On fait la boucle sur le tableau filtré, et non plus sur le tableau complet */}
+                    {/* 4. On fait la boucle sur le tableau filtré, et non plus sur le tableau complet */}
                     {artisansAffiches.map((artisan) => (
                         <article key={artisan.id} className="carte-artisan">
                             <Link to={`/artisan/${artisan.id}`} className="lien-carte">
