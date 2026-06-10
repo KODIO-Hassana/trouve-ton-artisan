@@ -13,7 +13,7 @@
                     <Link to="/contact">Contact</Link>
                 </div>
         
-        <p class="copyright">© 2026 Trouve ton artisan. Tous droits réservés.</p>
+        <p className="copyright">© 2026 Trouve ton artisan. Tous droits réservés.</p>
     </footer>
         );
     }

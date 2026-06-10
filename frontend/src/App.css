@@ -24,3 +24,159 @@ footer {
   text-align: center;
   min-height: 80vh; /* NOUVEAU : Force ce bloc à prendre au moins 80% de la hauteur de ton écran */
 }
+
+/* Réglage global pour empêcher le contenu de toucher les bords sur mobile */
+@media (max-width: 768px) {
+  .main-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  /* On s'assure que les images (comme le logo ou les photos) ne débordent pas */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* --- RESPONSIVE DESIGN : GRILLE DES ARTISANS --- */
+
+/* 1. Style par défaut pour les petits écrans (Mobiles) */
+.grille-artisans {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 1 seule carte par ligne */
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* 2. Écrans moyens (Tablettes, à partir de 768px de large) */
+@media (min-width: 768px) {
+  .grille-artisans {
+    grid-template-columns: repeat(2, 1fr); /* 2 cartes par ligne */
+  }
+}
+
+/* 3. Grands écrans (Ordinateurs, à partir de 1024px de large) */
+@media (min-width: 1024px) {
+  .grille-artisans {
+    grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
+  }
+}
+
+/* --- LE BOUTON HAMBURGER --- */
+.hamburger {
+  display: none; /* Caché sur ordinateur par défaut */
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger .ligne {
+  width: 30px;
+  height: 3px;
+  background-color: #004d80; /* À adapter à la couleur de ton design Figma */
+  border-radius: 5px;
+}
+
+/* --- RESPONSIVE DESIGN : LE MENU MOBILE --- */
+@media (max-width: 768px) {
+  /* 1. On affiche le bouton hamburger */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    top: 25px; /* Ajuste si le bouton est trop haut ou trop bas */
+  }
+
+  /* 2. On FORCE la dissimulation du menu avec !important */
+  header .navigation-droite {
+    display: none !important; 
+    position: absolute;
+    top: 80px; /* C'est la hauteur à laquelle le menu va s'ouvrir en dessous du logo */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 8px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
+  /* 3. On FORCE l'affichage uniquement quand la classe "ouvert" est là */
+  header .navigation-droite.ouvert {
+    display: block !important;
+  }
+
+/* 4. Esthétique des liens du menu ouvert (Version Force Brute) */
+  header .navigation-droite.ouvert ul.menu {
+    display: flex !important;
+    flex-direction: column !important; /* On force la colonne */
+    align-items: center !important;
+    padding: 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  header .navigation-droite.ouvert ul.menu li {
+    display: block !important; /* On casse l'alignement horizontal des liens */
+    margin: 15px 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* --- CORRECTION DU FOOTER MOBILE --- */
+  .App {
+    padding-bottom: 280px !important; /* On donne plus de place en bas car le footer va grandir */
+  }
+
+  footer {
+    height: auto !important; /* Le footer s'adapte à la taille de son contenu au lieu de rester bloqué à 100px */
+    padding: 20px 0 !important;
+  }
+
+  .liens-footer {
+    display: flex !important;
+    flex-direction: column !important; /* Empile les liens à la verticale */
+    align-items: center !important; /* Centre les liens */
+    gap: 15px !important; /* Ajoute un bel espace entre chaque lien */
+  }
+
+  /* --- RECHERCHE MOBILE DYNAMIQUE --- */
+  .recherche-mobile-container {
+    position: absolute;
+    right: 70px; /* On décale la loupe pour ne pas toucher le hamburger (qui est à 20px) */
+    top: 25px; /* Aligné verticalement avec le hamburger */
+  }
+
+  .bouton-icone-recherche {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #004d80; /* Couleur à adapter selon ta maquette */
+  }
+
+  /* La barre qui s'ouvre au clic */
+  .barre-recherche-deroulante {
+    position: fixed; /* Passe par-dessus tout le reste */
+    top: 80px; /* S'ouvre juste sous le header */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 15px 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 999;
+  }
+
+  .barre-recherche-deroulante input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px; /* 16px minimum pour éviter le zoom automatique sur iPhone */
+    outline: none;
+  }
+
+  .barre-recherche-deroulante input:focus {
+    border-color: #004d80;
+  }
+}

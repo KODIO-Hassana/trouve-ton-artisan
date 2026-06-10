@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+//Ajout de la lige bootstrap
+// import 'bootstrap/dist/css/bootstrap.min.css'
 // import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
