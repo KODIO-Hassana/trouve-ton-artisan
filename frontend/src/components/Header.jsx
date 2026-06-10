@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import logo from '../assets/img/Logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
     // Nos deux "interrupteurs" pour le menu et la recherche
     const [menuOuvert, setMenuOuvert] = useState(false);
     const [rechercheOuverte, setRechercheOuverte] = useState(false);
+    const location = useLocation();
 
     const categories = [
         "Bâtiment",
@@ -38,12 +39,12 @@ function Header() {
             </div>
             
             {/* LA RECHERCHE DYNAMIQUE */}
-            <div className="recherche-mobile-container">
+            {/* <div className="recherche-mobile-container">
                 <button className="bouton-icone-recherche" onClick={basculerRecherche}>
                     🔍
                 </button>
                 
-                {/* Cette div n'apparaît que si rechercheOuverte est vrai */}
+                
                 {rechercheOuverte && (
                     <div className="barre-recherche-deroulante">
                         <input 
@@ -53,7 +54,26 @@ function Header() {
                         />
                     </div>
                 )}
-            </div>
+            </div> */}
+
+            {/* LA RECHERCHE DYNAMIQUE (Invisible sur l'accueil) */}
+            {location.pathname !== '/' && (
+                <div className="recherche-mobile-container">
+                    <button className="bouton-icone-recherche" onClick={basculerRecherche}>
+                        🔍
+                    </button>
+                    
+                    {rechercheOuverte && (
+                        <div className="barre-recherche-deroulante">
+                            <input 
+                                type="search" 
+                                placeholder="Rechercher un artisan..." 
+                                autoFocus 
+                            />
+                        </div>
+                    )}
+                </div>
+            )}
             
             <button className="hamburger" onClick={basculerMenu}>
                 <span className="ligne"></span>
