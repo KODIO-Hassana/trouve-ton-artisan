@@ -27,7 +27,7 @@ const Contact = () => {
   };
 
   return (
-    <div style={{ 
+    <div className='page-contact' style={{ 
       padding: '40px', 
       maxWidth: '800px', 
       margin: '40px auto', 
