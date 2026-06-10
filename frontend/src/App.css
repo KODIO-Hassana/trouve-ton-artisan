@@ -1,262 +1,112 @@
-/* On s'assure que le contenu peut prendre toute la place */
+/* =================================================== */
+/* 1. STYLES GLOBAUX (Ordinateur et Mobile)            */
+/* =================================================== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body, #root {
-  height: 100%;
-}
+html, body, #root { height: 100%; }
 
 .App {
   min-height: 100vh;
-  position: relative; /* Indispensable pour la technique du sticky */
-  padding-bottom: 100px; /* Espace équivalent à la hauteur de ton footer */
-}
-
-/* On force le footer à se coller au bas du conteneur .App */
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100px; /* Ajuste cette hauteur si ton footer est plus grand */
+  position: relative; 
+  padding-bottom: 100px; 
 }
 
 .main-content {
   flex: 1;
   text-align: center;
-  min-height: 80vh; /* NOUVEAU : Force ce bloc à prendre au moins 80% de la hauteur de ton écran */
+  min-height: 80vh; 
 }
 
-/* Réglage global pour empêcher le contenu de toucher les bords sur mobile */
-@media (max-width: 768px) {
-  .main-content {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  
-  /* On s'assure que les images (comme le logo ou les photos) ne débordent pas */
-  img {
-    max-width: 100%;
-    height: auto;
-  }
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px; 
 }
 
-/* --- RESPONSIVE DESIGN : GRILLE DES ARTISANS --- */
-
-/* 1. Style par défaut pour les petits écrans (Mobiles) */
+/* Grille Artisans (Ordinateur et Tablette) */
 .grille-artisans {
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* 1 seule carte par ligne */
+  grid-template-columns: repeat(1, 1fr); 
   gap: 20px;
   margin-top: 20px;
 }
 
-/* 2. Écrans moyens (Tablettes, à partir de 768px de large) */
 @media (min-width: 768px) {
-  .grille-artisans {
-    grid-template-columns: repeat(2, 1fr); /* 2 cartes par ligne */
-  }
+  .grille-artisans { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* 3. Grands écrans (Ordinateurs, à partir de 1024px de large) */
 @media (min-width: 1024px) {
-  .grille-artisans {
-    grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
-  }
+  .grille-artisans { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* --- LE BOUTON HAMBURGER --- */
-.hamburger {
-  display: none; /* Caché sur ordinateur par défaut */
-  background: none;
-  border: none;
-  cursor: pointer;
-  flex-direction: column;
-  gap: 5px;
-}
+/* Éléments cachés sur ordinateur */
+.hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.hamburger .ligne { width: 30px; height: 3px; background-color: #004d80; border-radius: 5px; }
+.nav-mobile-bottom { display: none; } /* NOUVEAU : On cache la barre du bas sur PC */
 
-.hamburger .ligne {
-  width: 30px;
-  height: 3px;
-  background-color: #004d80; /* À adapter à la couleur de ton design Figma */
-  border-radius: 5px;
-}
+/* Réseaux sociaux */
+.reseaux-sociaux { display: flex; justify-content: center; gap: 20px; margin-top: 15px; margin-bottom: 10px; }
+.reseaux-sociaux a { font-size: 24px; color: #004d80; transition: transform 0.3s ease; }
+.reseaux-sociaux a:hover { transform: scale(1.2); }
 
-/* --- RESPONSIVE DESIGN : LE MENU MOBILE --- */
-@media (max-width: 768px) {
-  /* 1. On affiche le bouton hamburger */
-  .hamburger {
-    display: flex;
-    position: absolute;
-    right: 20px;
-    top: 25px; /* Ajuste si le bouton est trop haut ou trop bas */
-  }
-
-  /* 2. On FORCE la dissimulation du menu avec !important */
-  header .navigation-droite {
-    display: none !important; 
-    position: absolute;
-    top: 80px; /* C'est la hauteur à laquelle le menu va s'ouvrir en dessous du logo */
-    left: 0;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 8px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
-  }
-
-  /* 3. On FORCE l'affichage uniquement quand la classe "ouvert" est là */
-  header .navigation-droite.ouvert {
-    display: block !important;
-  }
-
-/* 4. Esthétique des liens du menu ouvert (Version Force Brute) */
-  header .navigation-droite.ouvert ul.menu {
-    display: flex !important;
-    flex-direction: column !important; /* On force la colonne */
-    align-items: center !important;
-    padding: 20px 0 !important;
-    margin: 0 !important;
-  }
-
-  header .navigation-droite.ouvert ul.menu li {
-    display: block !important; /* On casse l'alignement horizontal des liens */
-    margin: 15px 0 !important;
-    width: 100% !important;
-    text-align: center !important;
-  }
-
-  /* --- CORRECTION DU FOOTER MOBILE --- */
-  .App {
-    padding-bottom: 280px !important; /* On donne plus de place en bas car le footer va grandir */
-  }
-
-  footer {
-    height: auto !important; /* Le footer s'adapte à la taille de son contenu au lieu de rester bloqué à 100px */
-    padding: 20px 0 !important;
-  }
-
-  .liens-footer {
-    display: flex !important;
-    flex-direction: column !important; /* Empile les liens à la verticale */
-    align-items: center !important; /* Centre les liens */
-    gap: 15px !important; /* Ajoute un bel espace entre chaque lien */
-  }
-
-  /* --- RECHERCHE MOBILE DYNAMIQUE --- */
-  .recherche-mobile-container {
-    position: absolute;
-    right: 70px; /* On décale la loupe pour ne pas toucher le hamburger (qui est à 20px) */
-    top: 25px; /* Aligné verticalement avec le hamburger */
-  }
-
-  .bouton-icone-recherche {
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #004d80; /* Couleur à adapter selon ta maquette */
-  }
-
-  /* La barre qui s'ouvre au clic */
-  .barre-recherche-deroulante {
-    position: fixed; /* Passe par-dessus tout le reste */
-    top: 80px; /* S'ouvre juste sous le header */
-    left: 0;
-    width: 100%;
-    background-color: white;
-    padding: 15px 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    z-index: 999;
-  }
-
-  .barre-recherche-deroulante input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px; /* 16px minimum pour éviter le zoom automatique sur iPhone */
-    outline: none;
-  }
-
-  .barre-recherche-deroulante input:focus {
-    border-color: #004d80;
-  }
-}
 
 /* =================================================== */
-/* --- RESPONSIVE DESIGN : PAGE ARTISAN (MOBILE) --- */
+/* 2. RESPONSIVE DESIGN UNIQUE (MOBILES < 768px)       */
 /* =================================================== */
-
 @media (max-width: 768px) {
-  /* 1. On enlève le padding supplémentaire */
-  .page-artisan {
-    padding: 0; 
-  }
+  
+  /* --- GLOBAUX MOBILE --- */
+  .main-content { padding-left: 20px; padding-right: 20px; }
+  img { max-width: 100%; height: auto; }
+  
+  /* --- HEADER & MENU --- */
+  .hamburger { display: flex; position: absolute; right: 20px; top: 25px; }
+  
+  header .navigation-droite { display: none !important; position: absolute; top: 80px; left: 0; width: 100%; background-color: white; box-shadow: 0 8px 10px rgba(0,0,0,0.1); z-index: 1000; }
+  header .navigation-droite.ouvert { display: block !important; }
+  header .navigation-droite.ouvert ul.menu { display: flex !important; flex-direction: column !important; align-items: center !important; padding: 20px 0 !important; margin: 0 !important; }
+  header .navigation-droite.ouvert ul.menu li { display: block !important; margin: 15px 0 !important; width: 100% !important; text-align: center !important; }
 
-  /* 2. On empile la photo et les informations principales */
-  .en-tete-artisan {
+  /* --- RECHERCHE --- */
+  .recherche-mobile-container { position: absolute; right: 70px; top: 25px; }
+  .bouton-icone-recherche { background: none; border: none; font-size: 22px; cursor: pointer; color: #004d80; }
+  .barre-recherche-deroulante { position: fixed; top: 80px; left: 0; width: 100%; background-color: white; padding: 15px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 999; }
+  .barre-recherche-deroulante input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; outline: none; }
+  .barre-recherche-deroulante input:focus { border-color: #004d80; }
+
+  /* --- FOOTER MOBILE --- */
+  .App { padding-bottom: 340px !important; } /* Espace augmenté pour le footer + la barre de navigation du bas */
+  footer { height: auto !important; padding: 20px 0 !important; }
+  .liens-footer { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 15px !important; }
+
+  /* --- PAGE ARTISAN --- */
+  .page-artisan { padding: 0; }
+  .en-tete-artisan { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px; }
+  .en-tete-artisan img { width: calc(100% + 40px) !important; margin-left: -20px !important; margin-right: -20px !important; max-width: none !important; height: auto; border-radius: 0 !important; }
+  .details-artisan { display: flex; flex-direction: column; gap: 30px; margin-top: 20px; text-align: left; }
+  .contact-artisan .btn-contact { width: 100%; padding: 15px; margin-top: 20px; font-size: 16px; }
+
+  /* --- PAGE CONTACT --- */
+  .page-contact { padding: 20px !important; margin: 20px !important; }
+  .page-contact input, .page-contact textarea { width: 100% !important; padding: 12px !important; margin-bottom: 15px !important; box-sizing: border-box !important; }
+  .page-contact textarea { min-height: 150px !important; }
+  .page-contact button[type="submit"] { width: 100% !important; padding: 15px !important; font-size: 16px !important; margin-top: 10px !important; }
+
+  /* --- NOUVEAU : BARRE DE NAVIGATION DU BAS --- */
+  .nav-mobile-bottom {
     display: flex;
-    flex-direction: column;
+    position: fixed; 
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    justify-content: space-around;
     align-items: center;
-    text-align: center;
-    gap: 15px;
+    z-index: 2000; 
   }
 
-  /* 3. LE SECRET : L'image "casse" les marges pour toucher les bords de l'écran */
-  .en-tete-artisan img {
-    width: calc(100% + 40px) !important; /* 100% de la largeur + 40px pour compenser les marges globales */
-    margin-left: -20px !important; /* On étire de 20px à gauche */
-    margin-right: -20px !important; /* On étire de 20px à droite */
-    max-width: none !important; /* On enlève la limite de taille */
-    height: auto;
-    border-radius: 0 !important; /* On enlève les bords arrondis pour un effet plein écran */
-  }
-
-  /* 4. On empile la section "À propos" et la section "Contact" */
-  .details-artisan {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; 
-    margin-top: 20px;
-    text-align: left; 
-  }
-
-  /* 5. On adapte le bouton de contact */
-  .contact-artisan .btn-contact {
-    width: 100%; 
-    padding: 15px;
-    margin-top: 20px;
-    font-size: 16px;
-  }
-}
-
-/* =================================================== */
-/* --- RESPONSIVE DESIGN : PAGE CONTACT (MOBILE) --- */
-/* =================================================== */
-
-@media (max-width: 768px) {
-  /* On écrase le padding et le margin de 40px imposés par les styles en ligne */
-  .page-contact {
-    padding: 20px !important;
-    margin: 20px !important;
-  }
-
-  /* Les champs de texte s'étirent sur toute la largeur */
-  .page-contact input,
-  .page-contact textarea {
-    width: 100% !important;
-    padding: 12px !important;
-    margin-bottom: 15px !important;
-    box-sizing: border-box !important;
-  }
-
-  .page-contact textarea {
-    min-height: 150px !important;
-  }
-
-  /* Le bouton d'envoi prend toute la largeur pour le pouce */
-  .page-contact button[type="submit"] {
-    width: 100% !important;
-    padding: 15px !important;
-    font-size: 16px !important;
-    margin-top: 10px !important;
-  }
+  .nav-mobile-bottom a { font-size: 20px; color: #333; }
 }
