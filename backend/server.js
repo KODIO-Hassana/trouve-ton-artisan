@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 // 1. Importation des outils nécessaires
 const express = require('express');
 const cors = require('cors');
@@ -5,15 +7,31 @@ const mysql = require('mysql2'); // Le nouvel outil pour parler à ta base de do
 
 // 2. Initialisation de l'application
 const app = express();
-app.use(cors());
+// app.use(cors());
+
+// Configuration stricte des CORS (Sécurité)
+const corsOptions = {
+    origin: 'http://localhost:3000', // Autorise UNIQUEMENT le frontend React
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // 3. Configuration de la connexion à la base de données
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root', // Utilisateur par défaut
+//     password: '', // Laisse vide par défaut en local
+//     database: 'trouve_ton_artisan' // Le nom exact de la base que tu viens de créer
+// });
+
+// 3. Configuration de la connexion à la base de données
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root', // Utilisateur par défaut
-    password: '', // Laisse vide par défaut en local
-    database: 'trouve_ton_artisan' // Le nom exact de la base que tu viens de créer
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
 });
 
 // 4. Test de la connexion MySQL

@@ -1,67 +1,185 @@
-CREATE TABLE CATEGORIE (
-    id_categorie INT AUTO_INCREMENT PRIMARY KEY,
-    nom_categorie VARCHAR(255) NOT NULL
-);
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le : mer. 10 juin 2026 à 18:09
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
-CREATE TABLE SPECIALITE (
-    id_specialite INT AUTO_INCREMENT PRIMARY KEY,
-    nom_specialite VARCHAR(255) NOT NULL,
-    id_categorie INT NOT NULL,
-    FOREIGN KEY (id_categorie) REFERENCES CATEGORIE(id_categorie)
-);
-
-CREATE TABLE ARTISAN (
-    id_artisan INT AUTO_INCREMENT PRIMARY KEY,
-    nom_artisan VARCHAR(255) NOT NULL,
-    note_artisan FLOAT NOT NULL,
-    ville_artisan VARCHAR(255) NOT NULL,
-    description_artisan TEXT NOT NULL,
-    email_artisan VARCHAR(255) NOT NULL,
-    site_web_artisan VARCHAR(255),
-    is_top_artisan BOOLEAN NOT NULL,
-    id_specialite INT NOT NULL,
-    FOREIGN KEY (id_specialite) REFERENCES SPECIALITE(id_specialite)
-);
-
-INSERT INTO CATEGORIE (nom_categorie) VALUES 
-('Alimentation'),
-('Bâtiment'),
-('Services'),
-('Fabrication');
-
-INSERT INTO SPECIALITE (nom_specialite, id_categorie) VALUES 
-('Boucher', 1),
-('Boulanger', 1),
-('Chocolatier', 1),
-('Traiteur', 1),
-('Chauffagiste', 2),
-('Electricien', 2),
-('Menuisier', 2),
-('Plombier', 2),
-('Coiffeur', 3),
-('Fleuriste', 3),
-('Toiletteur', 3),
-('Webdesign', 3),
-('Bijoutier', 4),
-('Couturier', 4),
-('Ferronier', 4);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
-INSERT INTO ARTISAN (nom_artisan, note_artisan, ville_artisan, description_artisan, email_artisan, site_web_artisan, is_top_artisan, id_specialite) VALUES
-('Boucherie Dumont', 4.5, 'Lyon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'boucherie.dumond@gmail.com', NULL, FALSE, 1),
-('Au pain chaud', 4.8, 'Montélimar', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'aupainchaud@hotmail.com', NULL, TRUE, 2),
-('Chocolaterie Labbé', 4.9, 'Lyon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'chocolaterie-labbe@gmail.com', 'https://chocolaterie-labbe.fr', TRUE, 3),
-('Traiteur Truchon', 4.1, 'Lyon', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'contact@truchon-traiteur.fr', 'https://truchon-traiteur.fr', FALSE, 4),
-('Orville Salmons', 5.0, 'Evian', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'o-salmons@live.com', NULL, TRUE, 5),
-('Mont Blanc Eléctricité', 4.5, 'Chamonix', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'contact@mont-blanc-electricite.com', 'https://mont-blanc-electricite.com', FALSE, 6),
-('Boutot & fils', 4.7, 'Bourg-en-bresse', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'boutot-menuiserie@gmail.com', 'https://boutot-menuiserie.com', FALSE, 7),
-('Vallis Bellemare', 4.0, 'Vienne', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'v.bellemare@gmail.com', 'https://plomberie-bellemare.com', FALSE, 8),
-('Claude Quinn', 4.2, 'Aix-les-bains', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'claude.quinn@gmail.com', NULL, FALSE, 13),
-('Amitee Lécuyer', 4.5, 'Annecy', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'a.amitee@hotmail.com', 'https://lecuyer-couture.com', FALSE, 14),
-('Ernest Carignan', 5.0, 'Le Puy-en-Velay', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'e-carigan@hotmail.com', NULL, FALSE, 15),
-('Royden Charbonneau', 3.8, 'Saint-Priest', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'r.charbonneau@gmail.com', NULL, FALSE, 9),
-('Leala Dennis', 3.8, 'Chambéry', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'l.dennos@hotmail.fr', 'https://coiffure-leala-chambery.fr', FALSE, 9),
-('C''est sup''hair', 4.1, 'Romans-sur-Isère', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'sup-hair@gmail.com', 'https://sup-hair.fr', FALSE, 9),
-('Le monde des fleurs', 4.6, 'Annonay', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'contact@le-monde-des-fleurs-annonay.fr', 'https://le-monde-des-fleurs-annonay.fr', FALSE, 10),
-('Valérie Laderoute', 4.5, 'Valence', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'v-laredoute@gmail.com', NULL, FALSE, 11),
-('CM Graphisme', 4.4, 'Valence', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eleifend ante sem, id volutpat massa fermentum nec. Praesent volutpat scelerisque mauris, quis sollicitudin tellus sollicitudin. ', 'contact@cm-graphisme.com', 'https://cm-graphisme.com', FALSE, 12);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `trouve_ton_artisan`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `artisan`
+--
+
+CREATE TABLE `artisan` (
+  `id_artisan` int(11) NOT NULL,
+  `nom_artisan` varchar(255) NOT NULL,
+  `note_artisan` float NOT NULL,
+  `ville_artisan` varchar(255) NOT NULL,
+  `description_artisan` text NOT NULL,
+  `email_artisan` varchar(255) NOT NULL,
+  `site_web_artisan` varchar(255) DEFAULT NULL,
+  `is_top_artisan` tinyint(1) NOT NULL,
+  `id_specialite` int(11) NOT NULL,
+  `image` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `artisan`
+--
+
+INSERT INTO `artisan` (`id_artisan`, `nom_artisan`, `note_artisan`, `ville_artisan`, `description_artisan`, `email_artisan`, `site_web_artisan`, `is_top_artisan`, `id_specialite`, `image`) VALUES
+(1, 'Boucherie Dumont', 4.5, 'Lyon', 'Boucherie artisanale située au cœur de Lyon, proposant des viandes locales de grande qualité. Notre équipe vous conseille avec passion pour tous vos repas de fête ou du quotidien.', 'boucherie.dumond@gmail.com', NULL, 0, 1, '/img/boucherie.jpeg'),
+(2, 'Au pain chaud', 4.8, 'Montélimar', 'Boulangerie traditionnelle incontournable à Montélimar. Nous préparons chaque jour des pains au levain naturel et des viennoiseries faites maison pour ravir vos papilles dès le petit matin.', 'aupainchaud@hotmail.com', NULL, 1, 2, '/img/boulangerie.jpg'),
+(3, 'Chocolaterie Labbé', 4.9, 'Lyon', 'Artisan chocolatier créateur basé à Lyon. Venez découvrir nos pralinés fondants, nos ganaches intenses et nos tablettes grands crus élaborées sur place avec un savoir-faire unique.', 'chocolaterie-labbe@gmail.com', 'https://chocolaterie-labbe.fr', 1, 3, '/img/chocolaterie-labbe.jpg'),
+(4, 'Traiteur Truchon', 4.1, 'Lyon', 'L\'excellence gastronomique pour tous vos événements lyonnais. Traiteur sur mesure, nous cuisinons des produits frais et de saison pour sublimer vos mariages, réceptions et séminaires.', 'contact@truchon-traiteur.fr', 'https://truchon-traiteur.fr', 0, 4, '/img/traiteur.jpeg'),
+(5, 'Orville Salmons', 5, 'Evian', 'Expert chauffagiste intervenant sur tout le secteur d\'Evian. Nous assurons l\'installation, l\'entretien rigoureux et le dépannage rapide de vos chaudières et pompes à chaleur.', 'o-salmons@live.com', NULL, 1, 5, '/img/chauffagiste.jpg'),
+(6, 'Mont Blanc Eléctricité', 4.5, 'Chamonix', 'Votre électricien de confiance à Chamonix. Spécialistes des installations en haute montagne, nous garantissons la mise aux normes et la sécurité absolue de vos réseaux électriques.', 'contact@mont-blanc-electricite.com', 'https://mont-blanc-electricite.com', 0, 6, '/img/electricien.jpeg'),
+(7, 'Boutot & fils', 4.7, 'Bourg-en-bresse', 'Menuiserie familiale implantée à Bourg-en-Bresse depuis deux générations. Nous concevons vos meubles sur mesure en atelier et assurons une pose impeccable de vos aménagements bois.', 'boutot-menuiserie@gmail.com', 'https://boutot-menuiserie.com', 0, 7, '/img/menuisier.jpeg'),
+(8, 'Vallis Bellemare', 4, 'Vienne', 'Artisan plombier réactif et disponible sur la région de Vienne. Qu\'il s\'agisse d\'une urgence fuite ou d\'une rénovation complète de salle de bain, nous vous garantissons un travail soigné.', 'v.bellemare@gmail.com', 'https://plomberie-bellemare.com', 0, 8, '/img/plombier.jpeg'),
+(9, 'Claude Quinn', 4.2, 'Aix-les-bains', 'Artisan bijoutier créateur indépendant à Aix-les-Bains. Je dessine, façonne des bijoux uniques en or et en argent, et restaure avec minutie vos précieuses pièces de famille.', 'claude.quinn@gmail.com', NULL, 0, 13, '/img/bijoutier.jpeg'),
+(10, 'Amitee Lécuyer', 4.5, 'Annecy', 'Couturière modéliste expérimentée installée à Annecy. Des retouches précises à la confection sur mesure de robes de mariée, j\'apporte un soin exceptionnel à chaque tombé de tissu.', 'a.amitee@hotmail.com', 'https://lecuyer-couture.com', 0, 14, '/img/couturier.jpeg'),
+(11, 'Ernest Carignan', 5, 'Le Puy-en-Velay', 'Maître ferronnier d\'art au Puy-en-Velay. Création de portails, garde-corps et mobiliers en fer forgé, alliant les techniques traditionnelles de la forge au design contemporain.', 'e-carigan@hotmail.com', NULL, 0, 15, '/img/ferronnier.jpeg'),
+(12, 'Royden Charbonneau', 3.8, 'Saint-Priest', 'Salon de coiffure convivial et moderne à Saint-Priest. Notre équipe de visagistes vous accueille pour sublimer vos cheveux avec des coupes tendances et des soins profonds adaptés.', 'r.charbonneau@gmail.com', NULL, 0, 9, '/img/coiffeur1.jpeg'),
+(13, 'Leala Dennis', 3.8, 'Chambéry', 'Coiffeuse coloriste passionnée au centre de Chambéry. Je suis spécialisée dans les balayages naturels et les colorations douces pour un résultat lumineux qui respecte votre cuir chevelu.', 'l.dennos@hotmail.fr', 'https://coiffure-leala-chambery.fr', 0, 9, '/img/coiffeur2.jpeg'),
+(14, 'C\'est sup\'hair', 4.1, 'Romans-sur-Isère', 'Salon de coiffure mixte et espace barbier situé à Romans-sur-Isère. Profitez d\'un véritable moment de détente et de conseils personnalisés entre les mains expertes de nos stylistes.', 'sup-hair@gmail.com', 'https://sup-hair.fr', 0, 9, '/img/coiffeur3.jpeg'),
+(15, 'Le monde des fleurs', 4.6, 'Annonay', 'Artisan fleuriste passionné et créatif à Annonay. Compositions florales originales, bouquets de saison et décoration sur mesure pour illuminer tous vos événements spéciaux.', 'contact@le-monde-des-fleurs-annonay.fr', 'https://le-monde-des-fleurs-annonay.fr', 0, 10, '/img/fleuriste.jpeg'),
+(16, 'Valérie Laderoute', 4.5, 'Valence', 'Salon de toilettage canin et félin professionnel à Valence. Je chouchoute vos compagnons à quatre pattes avec des produits doux, des coupes aux ciseaux et une grande dose de tendresse. ', 'v-laredoute@gmail.com', NULL, 0, 11, '/img/toiletteur.jpeg'),
+(17, 'CM Graphisme', 4.4, 'Valence', 'Studio de webdesign et de création graphique basé à Valence. J\'accompagne les professionnels dans la création de leur identité visuelle et la conception de sites web esthétiques et performants.', 'contact@cm-graphisme.com', 'https://cm-graphisme.com', 0, 12, '/img/webdesign.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categorie`
+--
+
+CREATE TABLE `categorie` (
+  `id_categorie` int(11) NOT NULL,
+  `nom_categorie` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `categorie`
+--
+
+INSERT INTO `categorie` (`id_categorie`, `nom_categorie`) VALUES
+(1, 'Alimentation'),
+(2, 'Bâtiment'),
+(3, 'Services'),
+(4, 'Fabrication');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `specialite`
+--
+
+CREATE TABLE `specialite` (
+  `id_specialite` int(11) NOT NULL,
+  `nom_specialite` varchar(255) NOT NULL,
+  `id_categorie` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `specialite`
+--
+
+INSERT INTO `specialite` (`id_specialite`, `nom_specialite`, `id_categorie`) VALUES
+(1, 'Boucher', 1),
+(2, 'Boulanger', 1),
+(3, 'Chocolatier', 1),
+(4, 'Traiteur', 1),
+(5, 'Chauffagiste', 2),
+(6, 'Electricien', 2),
+(7, 'Menuisier', 2),
+(8, 'Plombier', 2),
+(9, 'Coiffeur', 3),
+(10, 'Fleuriste', 3),
+(11, 'Toiletteur', 3),
+(12, 'Webdesign', 3),
+(13, 'Bijoutier', 4),
+(14, 'Couturier', 4),
+(15, 'Ferronier', 4);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `artisan`
+--
+ALTER TABLE `artisan`
+  ADD PRIMARY KEY (`id_artisan`),
+  ADD KEY `id_specialite` (`id_specialite`);
+
+--
+-- Index pour la table `categorie`
+--
+ALTER TABLE `categorie`
+  ADD PRIMARY KEY (`id_categorie`);
+
+--
+-- Index pour la table `specialite`
+--
+ALTER TABLE `specialite`
+  ADD PRIMARY KEY (`id_specialite`),
+  ADD KEY `id_categorie` (`id_categorie`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `artisan`
+--
+ALTER TABLE `artisan`
+  MODIFY `id_artisan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT pour la table `categorie`
+--
+ALTER TABLE `categorie`
+  MODIFY `id_categorie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `specialite`
+--
+ALTER TABLE `specialite`
+  MODIFY `id_specialite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `artisan`
+--
+ALTER TABLE `artisan`
+  ADD CONSTRAINT `artisan_ibfk_1` FOREIGN KEY (`id_specialite`) REFERENCES `specialite` (`id_specialite`);
+
+--
+-- Contraintes pour la table `specialite`
+--
+ALTER TABLE `specialite`
+  ADD CONSTRAINT `specialite_ibfk_1` FOREIGN KEY (`id_categorie`) REFERENCES `categorie` (`id_categorie`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
