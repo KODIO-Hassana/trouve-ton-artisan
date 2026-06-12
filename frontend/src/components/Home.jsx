@@ -5,11 +5,9 @@ function Home() {
     const [artisansDuMois, setArtisansDuMois] = useState([]);
 
     useEffect(() => {
-        // On récupère les données de ton backend
         fetch('http://localhost:5000/api/artisans')
             .then(reponse => reponse.json())
             .then(donnees => {
-                // On filtre pour ne garder que les 3 artisans mis en avant
                 const tops = donnees.filter(artisan => artisan.top === true);
                 setArtisansDuMois(tops.length > 0 ? tops : donnees.slice(0, 3));
             })
@@ -19,30 +17,33 @@ function Home() {
     return (
         <main>
             {/* 1. SECTION BANNIÈRE */}
-            <section className="banniere-accueil">
-                <div className="contenu-banniere container">
-                    <h1 className="fw-bold display-4">Trouvez l'artisan qu'il vous faut</h1>
-                    <p className="lead mb-4">Dans toute la région Auvergne-Rhône-Alpes</p>
+            {/* Ajout de px-3 pour garantir des marges sur mobile */}
+            <section className="banniere-accueil px-3">
+                <div className="contenu-banniere container w-100">
                     
-                    {/* Barre de recherche intégrée avec Bootstrap */}
-                    <form className="d-flex justify-content-center" role="search">
+                    {/* Remplacement de display-4 par fs-1 (plus flexible sur mobile) */}
+                    <h1 className="fw-bold text-white mb-4 fs-1">
+                        Trouvez l'artisan qu'il vous faut
+                    </h1>
+                    
+                    {/* Suppression de la phrase de sous-titre */}
+                    
+                    {/* Barre de recherche centrée, sans bouton à droite */}
+                    <form className="mx-auto" style={{ maxWidth: '600px' }} role="search">
+                        {/* form-control-lg agrandit le champ, rounded-pill arrondit joliment les bords (optionnel selon le Figma) */}
                         <input 
-                            className="form-control form-control-lg me-2 shadow-sm border-0" 
+                            className="form-control form-control-lg shadow-sm border-0 py-3 px-4" 
                             type="search" 
-                            placeholder="Métier, ville, nom..." 
+                            placeholder="Rechercher un artisan, une spécialité..." 
                             aria-label="Recherche" 
-                            style={{ maxWidth: '500px' }}
                         />
-                        <button className="btn btn-primary btn-lg shadow-sm fw-bold" type="submit">
-                            Rechercher
-                        </button>
                     </form>
                 </div>
             </section>
 
-            {/* 2. SECTION ARTISANS DU MOIS (Conforme à la maquette) */}
+            {/* 2. SECTION ARTISANS DU MOIS */}
             <section className="bg-light py-5">
-                <div className="container">
+                <div className="container px-4">
                     <h2 className="text-center text-secondary mb-5 fw-bold">Artisans du mois</h2>
                     
                     {/* La grille Bootstrap : row g-4 recrée l'alignement propre */}
