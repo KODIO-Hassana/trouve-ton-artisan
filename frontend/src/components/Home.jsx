@@ -1,68 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// 1. AJOUT DE L'IMPORT HELMET ICI :
-import { Helmet } from 'react-helmet-async'; 
 
 function Home() {
-    // 1. On crée un état pour stocker uniquement les artisans à la une
-    const [topArtisans, setTopArtisans] = useState([]);
+    const [artisansDuMois, setArtisansDuMois] = useState([]);
 
-    // 2. On interroge l'API au chargement de la page
     useEffect(() => {
+        // On récupère les données de ton backend
         fetch('http://localhost:5000/api/artisans')
             .then(reponse => reponse.json())
             .then(donnees => {
-                // 3. On filtre les résultats : on ne garde que ceux où "top" est égal à 1 (true en SQL)
-                const aLaUne = donnees.filter(artisan => artisan.top === 1 || artisan.top === true);
-                setTopArtisans(aLaUne);
+                // On filtre pour ne garder que les 3 artisans mis en avant
+                const tops = donnees.filter(artisan => artisan.top === true);
+                setArtisansDuMois(tops.length > 0 ? tops : donnees.slice(0, 3));
             })
-            .catch(erreur => console.error("Erreur lors de la récupération :", erreur));
+            .catch(erreur => console.error("Erreur de récupération :", erreur));
     }, []);
 
     return (
         <main>
-            {/* 2. AJOUT DU BLOC SEO ICI : */}
-            <Helmet>
-                <title>Trouve Ton Artisan - Accueil</title>
-                <meta name="description" content="Annuaire des artisans du bâtiment, des services, de la fabrication et de l'alimentation en région Auvergne-Rhône-Alpes." />
-            </Helmet>
-
-             {/* Section Bannière  */}
+            {/* 1. SECTION BANNIÈRE */}
             <section className="banniere-accueil">
-                <div className="contenu-banniere">
-                    <h1>Trouvez l'artisan idéal près de chez vous.</h1>
+                <div className="contenu-banniere container">
+                    <h1 className="fw-bold display-4">Trouvez l'artisan qu'il vous faut</h1>
+                    <p className="lead mb-4">Dans toute la région Auvergne-Rhône-Alpes</p>
                     
-                    {/* Barre de recherche */}
-                    <form action="#" className="barre-recherche">
-                        <input type="text" placeholder="Quel artisan ?.."/>
-                        <button type="submit">Rechercher</button>
+                    {/* Barre de recherche intégrée avec Bootstrap */}
+                    <form className="d-flex justify-content-center" role="search">
+                        <input 
+                            className="form-control form-control-lg me-2 shadow-sm border-0" 
+                            type="search" 
+                            placeholder="Métier, ville, nom..." 
+                            aria-label="Recherche" 
+                            style={{ maxWidth: '500px' }}
+                        />
+                        <button className="btn btn-primary btn-lg shadow-sm fw-bold" type="submit">
+                            Rechercher
+                        </button>
                     </form>
                 </div>
             </section>
 
-            {/* Section Artisans à la une */}
-            <section className="artisans-a-la-une">
-                <h2>Artisans à la une</h2>
-                
-                <div className="grille-artisans">
-                    {/* 4. On affiche les cartes générées depuis la base de données */}
-                    {topArtisans.length > 0 ? (
-                        topArtisans.map((artisan) => (
-                            <article key={artisan.id} className="carte-artisan">
-                                <Link to={`/artisan/${artisan.id}`} className="lien-carte">
-                                    <img src={artisan.image} alt={artisan.nom} />
-                                    <div className="infos-artisan">
-                                        <h3>{artisan.nom}</h3>
-                                        <p className="metier">{artisan.metier}</p>
-                                        <p className="ville">{artisan.ville}</p>
-                                        <p className="note">★ {artisan.note}/5</p>
+            {/* 2. SECTION ARTISANS DU MOIS (Conforme à la maquette) */}
+            <section className="bg-light py-5">
+                <div className="container">
+                    <h2 className="text-center text-secondary mb-5 fw-bold">Artisans du mois</h2>
+                    
+                    {/* La grille Bootstrap : row g-4 recrée l'alignement propre */}
+                    <div className="row g-4 justify-content-center">
+                        {artisansDuMois.map(artisan => (
+                            <article key={artisan.id} className="col-12 col-md-6 col-lg-4">
+                                <Link to={`/artisan/${artisan.id}`} className="text-decoration-none">
+                                    <div className="card h-100 shadow-sm border-0">
+                                        <img 
+                                            src={artisan.image} 
+                                            alt={artisan.nom} 
+                                            className="card-img-top"
+                                            style={{ height: '220px', objectFit: 'cover' }}
+                                        />
+                                        <div className="card-body text-center p-4">
+                                            <h3 className="h5 fw-bold text-dark mb-2">{artisan.nom}</h3>
+                                            <p className="text-primary fw-bold mb-1">{artisan.metier}</p>
+                                            <p className="text-muted small mb-3">{artisan.ville}</p>
+                                            <p className="text-warning fw-bold mb-0 fs-5">★ {artisan.note}/5</p>
+                                        </div>
                                     </div>
                                 </Link>
                             </article>
-                        ))
-                    ) : (
-                        <p className="aucun-resultat">Chargement des artisans à la une...</p>
-                    )}
+                        ))}
+                    </div>
                 </div>
             </section>
         </main>

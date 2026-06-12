@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import logo from '../assets/img/Logo.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Header() {
-    // Nos deux "interrupteurs" pour le menu et la recherche
+    // On garde uniquement l'état du menu mobile, c'est plus simple et robuste !
     const [menuOuvert, setMenuOuvert] = useState(false);
-    const [rechercheOuverte, setRechercheOuverte] = useState(false);
-    const location = useLocation();
 
     const categories = [
         "Bâtiment",
@@ -17,82 +15,67 @@ function Header() {
 
     const basculerMenu = () => {
         setMenuOuvert(!menuOuvert);
-        setRechercheOuverte(false); // Ferme la recherche si on ouvre le menu
-    };
-    
-    const basculerRecherche = () => {
-        setRechercheOuverte(!rechercheOuverte);
-        setMenuOuvert(false); // Ferme le menu si on ouvre la recherche
     };
 
     const fermerTout = () => {
         setMenuOuvert(false);
-        setRechercheOuverte(false);
     };
 
     return (
-        <header className="en-tete-principal">
-            <div className="logo-container">
-                <Link to="/" onClick={fermerTout}>
-                    <img src={logo} alt="Logo Trouve ton artisan" className="logo-img" />
+        // navbar-expand-lg permet de passer en menu burger sur petit écran
+        // bg-light (fond clair) et shadow-sm (petite ombre) pour l'esthétique
+        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-2">
+            <div className="container">
+                
+                {/* Le Logo (navbar-brand) */}
+                <Link className="navbar-brand" to="/" onClick={fermerTout}>
+                    <img src={logo} alt="Logo Trouve ton artisan" height="60" />
                 </Link>
-            </div>
-            
-            {/* LA RECHERCHE DYNAMIQUE */}
-            {/* <div className="recherche-mobile-container">
-                <button className="bouton-icone-recherche" onClick={basculerRecherche}>
-                    🔍
-                </button>
-                
-                
-                {rechercheOuverte && (
-                    <div className="barre-recherche-deroulante">
-                        <input 
-                            type="search" 
-                            placeholder="Rechercher un artisan..." 
-                            autoFocus 
-                        />
-                    </div>
-                )}
-            </div> */}
 
-            {/* LA RECHERCHE DYNAMIQUE (Invisible sur l'accueil) */}
-            {location.pathname !== '/' && (
-                <div className="recherche-mobile-container">
-                    <button className="bouton-icone-recherche" onClick={basculerRecherche}>
-                        🔍
-                    </button>
+                {/* Le bouton Hamburger (navbar-toggler) */}
+                <button 
+                    className="navbar-toggler border-0" 
+                    type="button" 
+                    onClick={basculerMenu}
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                {/* Le menu déroulant contrôlé par ton état React */}
+                <div className={`collapse navbar-collapse ${menuOuvert ? 'show' : ''}`}>
                     
-                    {rechercheOuverte && (
-                        <div className="barre-recherche-deroulante">
-                            <input 
-                                type="search" 
-                                placeholder="Rechercher un artisan..." 
-                                autoFocus 
-                            />
-                        </div>
-                    )}
-                </div>
-            )}
-            
-            <button className="hamburger" onClick={basculerMenu}>
-                <span className="ligne"></span>
-                <span className="ligne"></span>
-                <span className="ligne"></span>
-            </button>
-            
-            <nav className={`navigation-droite ${menuOuvert ? 'ouvert' : ''}`}>
-                <ul className="menu">
-                    <li><Link to="/" onClick={fermerTout}>Accueil</Link></li>
-                    {categories.map((categorie) => (
-                        <li key={categorie}>
-                            <Link to={`/artisans/${categorie}`} onClick={fermerTout}>{categorie}</Link>
+                    {/* Liste des liens (navbar-nav) centré avec mx-auto */}
+                    <ul className="navbar-nav mx-auto mb-2 mb-lg-0 gap-2 fw-bold text-center mt-3 mt-lg-0">
+                        <li className="nav-item">
+                            <Link className="nav-link text-primary" to="/" onClick={fermerTout}>Accueil</Link>
                         </li>
-                    ))}
-                    <li><Link to="/contact" onClick={fermerTout}>Contact</Link></li> 
-                </ul>
-            </nav>
-        </header>
+                        {categories.map((categorie) => (
+                            <li className="nav-item" key={categorie}>
+                                <Link className="nav-link text-primary" to={`/artisans/${categorie}`} onClick={fermerTout}>
+                                    {categorie}
+                                </Link>
+                            </li>
+                        ))}
+                        <li className="nav-item">
+                            <Link className="nav-link text-primary" to="/contact" onClick={fermerTout}>Contact</Link>
+                        </li>
+                    </ul>
+
+                    {/* La barre de recherche intégrée proprement dans la navigation */}
+                    <form className="d-flex justify-content-center mt-3 mt-lg-0" role="search">
+                        <input 
+                            className="form-control me-2 border-primary" 
+                            type="search" 
+                            placeholder="Rechercher..." 
+                            aria-label="Recherche" 
+                        />
+                        <button className="btn btn-outline-primary" type="submit">
+                            🔍
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
     );
 }
 

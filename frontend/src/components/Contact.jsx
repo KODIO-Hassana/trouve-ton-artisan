@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const Contact = () => {
-  // État pour stocker les données tapées par l'utilisateur
   const [formData, setFormData] = useState({
     nom: '',
     email: '',
@@ -9,16 +8,13 @@ const Contact = () => {
     message: ''
   });
 
-  // État pour afficher un message de succès après l'envoi
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Fonction qui met à jour les données
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Fonction déclenchée quand on clique sur "Envoyer"
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Message général envoyé :", formData);
@@ -27,124 +23,98 @@ const Contact = () => {
   };
 
   return (
-    <div className='page-contact' style={{ 
-      padding: '40px', 
-      maxWidth: '800px', 
-      margin: '40px auto', 
-      backgroundColor: '#ffffff', 
-      borderRadius: '8px', 
-      boxShadow: '0 4px 15px rgba(0,0,0,0.05)', /* La même ombre élégante */
-      textAlign: 'left', 
-      color: '#333'
-    }}>
-      <h1 style={{ 
-        textAlign: 'center', 
-        color: '#2c3e50', 
-        marginBottom: '40px',
-        fontSize: '2rem'
-      }}>
-        Contactez-nous
-      </h1>
-
-      {isSubmitted ? (
-        <div style={{ 
-          padding: '20px', 
-          backgroundColor: '#d4edda', 
-          color: '#155724', 
-          borderRadius: '6px', 
-          textAlign: 'center',
-          border: '1px solid #c3e6cb'
-        }}>
-          <h3 style={{ marginBottom: '10px' }}>Merci pour votre message !</h3>
-          <p>Votre demande a bien été envoyée. Nous vous répondrons dans les plus brefs délais.</p>
-          <button 
-            onClick={() => setIsSubmitted(false)}
-            style={{ 
-              marginTop: '20px', 
-              padding: '10px 20px', 
-              backgroundColor: '#28a745', 
-              color: 'white', 
-              border: 'none', 
-              borderRadius: '4px', 
-              cursor: 'pointer',
-              fontWeight: 'bold'
-            }}
-          >
-            Envoyer un autre message
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    // Utilisation de container pour centrer et my-5 pour les marges en haut/bas
+    <div className='container my-5'>
+      <div className='row justify-content-center'>
+        <div className='col-12 col-md-8 col-lg-6'>
           
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="nom" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Nom :</label>
-            <input 
-              type="text" 
-              id="nom" 
-              name="nom" 
-              value={formData.nom} 
-              onChange={handleChange} 
-              required 
-              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
-            />
-          </div>
+          {/* card et shadow-sm créent un joli bloc blanc avec une ombre légère */}
+          <div className='card shadow-sm p-4 border-0 rounded-3'>
+            
+            {/* text-primary applique le bleu de la région, mb-4 gère la marge basse */}
+            <h1 className='text-center text-primary mb-4 fs-2 fw-bold'>
+              Contactez-nous
+            </h1>
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="email" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Email :</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              value={formData.email} 
-              onChange={handleChange} 
-              required 
-              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
-            />
-          </div>
+            {isSubmitted ? (
+              // alert alert-success gère le bloc de succès vert
+              <div className='alert alert-success text-center' role='alert'>
+                <h4 className='alert-heading mb-3'>Merci pour votre message !</h4>
+                <p>Votre demande a bien été envoyée. Nous vous répondrons dans les plus brefs délais.</p>
+                <hr />
+                <button 
+                  onClick={() => setIsSubmitted(false)}
+                  className='btn btn-success fw-bold mt-2'
+                >
+                  Envoyer un autre message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                
+                {/* mb-3 gère l'espacement entre chaque champ */}
+                <div className='mb-3'>
+                  <label htmlFor="nom" className='form-label fw-bold text-primary'>Nom :</label>
+                  {/* form-control stylise automatiquement l'input (bordure, focus, padding) */}
+                  <input 
+                    type="text" 
+                    id="nom" 
+                    name="nom" 
+                    className='form-control bg-light'
+                    value={formData.nom} 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="sujet" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Sujet :</label>
-            <input 
-              type="text" 
-              id="sujet" 
-              name="sujet" 
-              value={formData.sujet} 
-              onChange={handleChange} 
-              required 
-              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
-            />
-          </div>
+                <div className='mb-3'>
+                  <label htmlFor="email" className='form-label fw-bold text-primary'>Email :</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    className='form-control bg-light'
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label htmlFor="message" style={{ marginBottom: '8px', fontWeight: 'bold', color: '#3498db' }}>Message :</label>
-            <textarea 
-              id="message" 
-              name="message" 
-              rows="6" 
-              value={formData.message} 
-              onChange={handleChange} 
-              required 
-              style={{ padding: '12px', borderRadius: '6px', border: '1px solid #ddd', resize: 'vertical', fontSize: '1rem', backgroundColor: '#fdfdfd' }}
-            ></textarea>
-          </div>
+                <div className='mb-3'>
+                  <label htmlFor="sujet" className='form-label fw-bold text-primary'>Sujet :</label>
+                  <input 
+                    type="text" 
+                    id="sujet" 
+                    name="sujet" 
+                    className='form-control bg-light'
+                    value={formData.sujet} 
+                    onChange={handleChange} 
+                    required 
+                  />
+                </div>
 
-          <button 
-            type="submit" 
-            style={{ 
-              padding: '15px 20px', 
-              backgroundColor: '#3498db', 
-              color: 'white', 
-              border: 'none', 
-              borderRadius: '6px', 
-              cursor: 'pointer', 
-              fontWeight: 'bold',
-              fontSize: '1.1rem',
-              marginTop: '10px'
-            }}>
-            Envoyer le message
-          </button>
-        </form>
-      )}
+                <div className='mb-3'>
+                  <label htmlFor="message" className='form-label fw-bold text-primary'>Message :</label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    rows="6" 
+                    className='form-control bg-light'
+                    value={formData.message} 
+                    onChange={handleChange} 
+                    required 
+                  ></textarea>
+                </div>
+
+                {/* w-100 prend toute la largeur, btn-primary applique la couleur officielle */}
+                <button type="submit" className='btn btn-primary w-100 fs-5 fw-bold mt-3'>
+                  Envoyer le message
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
