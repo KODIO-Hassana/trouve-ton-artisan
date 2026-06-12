@@ -10,6 +10,7 @@ import ListeArtisans from './components/ListeArtisans';
 import Contact from './components/Contact';
 import MentionsLegales from './components/MentionsLégales';
 import Footer from './components/Footer';
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
 
               <Route path="/contact" element={<Contact />} />
               <Route path="/mentions-legales" element={<MentionsLegales />} />
+
+              <Route path='*' element={<NotFound/>} />
 
             </Routes>
         </div>
