@@ -8,7 +8,7 @@ import Home from './components/Home';
 import Artisan from './components/Artisan';
 import ListeArtisans from './components/ListeArtisans';
 import Contact from './components/Contact';
-import MentionsLegales from './components/MentionsLégales';
+import MentionsLegales from './components/MentionsLegales';
 import Footer from './components/Footer';
 import NotFound from './components/NotFound';
 
