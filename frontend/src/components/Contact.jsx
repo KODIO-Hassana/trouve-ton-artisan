@@ -44,7 +44,7 @@ const Contact = () => {
                 <div className="alert alert-success shadow-sm border-0" role="alert">
                   <h4 className="alert-heading fw-bold mb-3">Message envoyé !</h4>
                   <p className="mb-0 text-dark">
-                    Merci de nous avoir contactés. Nous vous répondrons dans les plus brefs délais.
+                    Merci de nous avoir contactés. Nous vous répondrons dans les plus brefs délais sous 48h.
                   </p>
                 </div>
                 <button 
