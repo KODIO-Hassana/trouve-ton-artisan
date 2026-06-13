@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,52 +17,50 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Le 'required' du HTML5 bloque l'envoi si les champs sont vides ou si l'email est mal formaté
     console.log("Message général envoyé :", formData);
     setIsSubmitted(true);
     setFormData({ nom: '', email: '', sujet: '', message: '' });
   };
 
   return (
-    <main className='container py-5'>
-      <Helmet>
-        <title>Contact - Trouve Ton Artisan</title>
-        <meta name="description" content="Contactez-nous pour toute question ou demande de renseignement." />
-      </Helmet>
-
+    // Utilisation de container pour centrer et my-5 pour les marges en haut/bas
+    <div className='container my-5'>
       <div className='row justify-content-center'>
         <div className='col-12 col-md-8 col-lg-6'>
           
-          <div className='card shadow-sm p-4 p-md-5 border-0 rounded-3 bg-white'>
+          {/* card et shadow-sm créent un joli bloc blanc avec une ombre légère */}
+          <div className='card shadow-sm p-4 border-0 rounded-3'>
+            
+            {/* text-primary applique le bleu de la région, mb-4 gère la marge basse */}
             <h1 className='text-center text-primary mb-4 fs-2 fw-bold'>
               Contactez-nous
             </h1>
 
             {isSubmitted ? (
-              <div className="text-center py-4">
-                <div className="alert alert-success shadow-sm border-0" role="alert">
-                  <h4 className="alert-heading fw-bold mb-3">Message envoyé !</h4>
-                  <p className="mb-0 text-dark">
-                    Merci de nous avoir contactés. Nous vous répondrons dans les plus brefs délais.
-                  </p>
-                </div>
+              // alert alert-success gère le bloc de succès vert
+              <div className='alert alert-success text-center' role='alert'>
+                <h4 className='alert-heading mb-3'>Merci pour votre message !</h4>
+                <p>Votre demande a bien été envoyée. Nous vous répondrons dans les plus brefs délais.</p>
+                <hr />
                 <button 
-                  className="btn btn-outline-primary mt-3 fw-bold" 
                   onClick={() => setIsSubmitted(false)}
+                  className='btn btn-success fw-bold mt-2'
                 >
                   Envoyer un autre message
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
+                
+                {/* mb-3 gère l'espacement entre chaque champ */}
                 <div className='mb-3'>
-                  <label htmlFor="nom" className='form-label fw-bold text-dark'>Nom :</label>
+                  <label htmlFor="nom" className='form-label fw-bold text-primary'>Nom :</label>
+                  {/* form-control stylise automatiquement l'input (bordure, focus, padding) */}
                   <input 
                     type="text" 
                     id="nom" 
                     name="nom" 
-                    className='form-control form-control-lg bg-light border-0 shadow-none'
-                    placeholder="Votre nom complet"
+                    className='form-control bg-light'
                     value={formData.nom} 
                     onChange={handleChange} 
                     required 
@@ -71,13 +68,12 @@ const Contact = () => {
                 </div>
 
                 <div className='mb-3'>
-                  <label htmlFor="email" className='form-label fw-bold text-dark'>Adresse e-mail :</label>
+                  <label htmlFor="email" className='form-label fw-bold text-primary'>Email :</label>
                   <input 
                     type="email" 
                     id="email" 
                     name="email" 
-                    className='form-control form-control-lg bg-light border-0 shadow-none'
-                    placeholder="exemple@email.com"
+                    className='form-control bg-light'
                     value={formData.email} 
                     onChange={handleChange} 
                     required 
@@ -85,34 +81,33 @@ const Contact = () => {
                 </div>
 
                 <div className='mb-3'>
-                  <label htmlFor="sujet" className='form-label fw-bold text-dark'>Sujet :</label>
+                  <label htmlFor="sujet" className='form-label fw-bold text-primary'>Sujet :</label>
                   <input 
                     type="text" 
                     id="sujet" 
                     name="sujet" 
-                    className='form-control form-control-lg bg-light border-0 shadow-none'
-                    placeholder="Objet de votre message"
+                    className='form-control bg-light'
                     value={formData.sujet} 
                     onChange={handleChange} 
                     required 
                   />
                 </div>
 
-                <div className='mb-4'>
-                  <label htmlFor="message" className='form-label fw-bold text-dark'>Message :</label>
+                <div className='mb-3'>
+                  <label htmlFor="message" className='form-label fw-bold text-primary'>Message :</label>
                   <textarea 
                     id="message" 
                     name="message" 
-                    rows="5" 
-                    className='form-control form-control-lg bg-light border-0 shadow-none'
-                    placeholder="Rédigez votre message ici..."
+                    rows="6" 
+                    className='form-control bg-light'
                     value={formData.message} 
                     onChange={handleChange} 
                     required 
                   ></textarea>
                 </div>
 
-                <button type="submit" className='btn btn-primary btn-lg w-100 fs-5 fw-bold mt-2 shadow-sm'>
+                {/* w-100 prend toute la largeur, btn-primary applique la couleur officielle */}
+                <button type="submit" className='btn btn-primary w-100 fs-5 fw-bold mt-3'>
                   Envoyer le message
                 </button>
               </form>
@@ -120,7 +115,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

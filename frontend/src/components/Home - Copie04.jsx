@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Ajout de useNavigate ici
+import { Link } from 'react-router-dom';
+
 
 function Home() {
-    // 1. LES VARIABLES SONT BIEN À L'INTÉRIEUR DE LA FONCTION
     const [artisansDuMois, setArtisansDuMois] = useState([]);
-    const [recherche, setRecherche] = useState(''); // Pour stocker ce que l'utilisateur tape
-    const navigate = useNavigate(); // L'outil pour changer de page
 
     useEffect(() => {
         fetch('http://localhost:5000/api/artisans')
@@ -17,6 +15,9 @@ function Home() {
             .catch(erreur => console.error("Erreur de récupération :", erreur));
     }, []);
 
+    // =========================================================================
+    // INTÉGRATION DE LA FONCTION : Exactement la même que dans Artisan.jsx
+    // =========================================================================
     const afficherEtoiles = (note) => {
         const noteNum = parseFloat(note); 
         const etoilesPleines = Math.floor(noteNum); 
@@ -36,36 +37,27 @@ function Home() {
         );
     };
 
-    // 2. LA FONCTION QUI SE DÉCLENCHE QUAND ON VALIDE LA RECHERCHE
-    const soumettreRecherche = (e) => {
-        e.preventDefault(); // Empêche la page de se recharger
-        if (recherche.trim() !== '') {
-            // On redirige vers la page artisans avec le mot-clé dans l'adresse
-            navigate(`/artisans?recherche=${recherche}`);
-        }
-    };
-
     return (
         <main>
+            {/* 1. SECTION BANNIÈRE */}
             <section className="banniere-accueil px-3">
                 <div className="contenu-banniere container w-100">
                     <h1 className="fw-bold text-white mb-4 fs-1">
                         Trouvez l'artisan qu'il vous faut
                     </h1>
                     
-                    {/* 3. LE FORMULAIRE DE RECHERCHE CONNECTÉ */}
-                    <form className="mx-auto" style={{ maxWidth: '600px' }} role="search" onSubmit={soumettreRecherche}>
+                    <form className="mx-auto" style={{ maxWidth: '600px' }} role="search">
                         <input 
                             className="form-control form-control-lg shadow-sm border-0 py-3 px-4" 
                             type="search" 
                             placeholder="Rechercher un artisan, une spécialité..." 
-                            value={recherche}
-                            onChange={(e) => setRecherche(e.target.value)}
+                            aria-label="Recherche" 
                         />
                     </form>
                 </div>
             </section>
 
+            {/* 2. SECTION ARTISANS DU MOIS */}
             <section className="bg-light py-5">
                 <div className="container px-4">
                     <h2 className="text-center text-secondary mb-5 fw-bold">Artisans du mois</h2>
@@ -86,6 +78,9 @@ function Home() {
                                             <p className="text-primary fw-bold mb-1">{artisan.metier}</p>
                                             <p className="text-muted small mb-3">{artisan.ville}</p>
                                             
+                                            {/* ========================================================================= */}
+                                            {/* APPEL DE LA FONCTION : Remplacement de l'ancien code par afficherEtoiles  */}
+                                            {/* ========================================================================= */}
                                             <p className="text-warning fw-bold mb-0 fs-5">
                                                 {afficherEtoiles(artisan.note)} <span className="text-dark ms-2 fs-6">{artisan.note}/5</span>
                                             </p>

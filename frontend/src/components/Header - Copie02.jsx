@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import logo from '../assets/img/Logo.png';
-import { Link, useLocation, useNavigate } from 'react-router-dom'; // Ajout de useNavigate
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
     const [menuOuvert, setMenuOuvert] = useState(false);
     const [rechercheOuverte, setRechercheOuverte] = useState(false);
     
-    // NOUVEAU : On crée une variable pour stocker le texte tapé dans la barre
-    const [termeRecherche, setTermeRecherche] = useState(''); 
-    
     const location = useLocation();
-    const navigate = useNavigate(); // NOUVEAU : L'outil pour rediriger
     const isHomePage = location.pathname === '/';
 
     const categories = [
@@ -35,26 +31,17 @@ function Header() {
         setRechercheOuverte(false);
     };
 
-    // NOUVEAU : La fonction qui se déclenche quand on appuie sur "Go" ou "Entrée"
-    const soumettreRecherche = (e) => {
-        e.preventDefault();
-        if (termeRecherche.trim() !== '') {
-            // 1. On redirige vers la liste avec le mot-clé
-            navigate(`/artisans?recherche=${termeRecherche}`);
-            // 2. On ferme la petite barre de recherche mobile
-            setRechercheOuverte(false);
-            // 3. On vide le champ pour la prochaine fois
-            setTermeRecherche(''); 
-        }
-    };
-
     return (
         <header className="bg-white shadow-sm sticky-top position-relative">
+            {/* py-2 au lieu de py-3 pour gagner un peu de place en hauteur sur mobile */}
             <nav className="navbar navbar-expand-lg navbar-light py-2 py-md-3">
+                
+                {/* L'AJOUT CLÉ EST ICI : d-flex, justify-content-between et flex-nowrap forcent l'alignement strict sur une ligne */}
                 <div className="container d-flex justify-content-between align-items-center flex-wrap flex-lg-nowrap">
                     
                     {/* LE LOGO */}
                     <Link className="navbar-brand m-0 p-0" to="/" onClick={fermerTout}>
+                        {/* L'ajout de img-fluid permet à l'image de rétrécir si l'écran est vraiment très petit */}
                         <img 
                             src={logo} 
                             alt="Logo Trouve ton artisan" 
@@ -109,14 +96,11 @@ function Header() {
                     className="bg-light border-top py-3 px-3 d-lg-none shadow-sm position-absolute w-100" 
                     style={{ zIndex: 1050, top: '100%' }}
                 >
-                    {/* NOUVEAU : On connecte le formulaire à notre fonction soumettreRecherche */}
-                    <form className="d-flex" role="search" onSubmit={soumettreRecherche}>
+                    <form className="d-flex" role="search">
                         <input 
                             className="form-control me-2 border-primary" 
                             type="search" 
                             placeholder="Rechercher un artisan..." 
-                            value={termeRecherche}
-                            onChange={(e) => setTermeRecherche(e.target.value)}
                             autoFocus 
                         />
                         <button className="btn btn-primary fw-bold" type="submit">

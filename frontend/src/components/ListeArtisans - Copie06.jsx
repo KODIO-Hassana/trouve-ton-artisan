@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom'; // Ajout de useLocation
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 function ListeArtisans() {
     const [artisans, setArtisans] = useState([]);
     const { categorie } = useParams();
-    
-    // 1. ON RÉCUPÈRE CE QUI A ÉTÉ TAPÉ DANS L'URL
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const termeRecherche = queryParams.get('recherche'); // Récupère le mot après ?recherche=
 
     useEffect(() => {
         fetch('http://localhost:5000/api/artisans')
@@ -20,25 +15,14 @@ function ListeArtisans() {
             .catch(erreur => console.error("Erreur lors de la récupération :", erreur));
     }, []);
 
-    // 2. LE NOUVEAU SYSTÈME DE FILTRAGE INTELLIGENT
-    const artisansAffiches = artisans.filter(artisan => {
-        // Filtre par catégorie (quand on clique dans le menu du header)
-        const matchCategorie = categorie 
-            ? (artisan.category === categorie || artisan.categorie === categorie) 
-            : true;
+    // 1. RÉACTIVATION DU FILTRE
+    // On vérifie le nom de la propriété dans ton backend (souvent 'category' ou 'categorie')
+    // Si categorie existe dans l'URL, on filtre, sinon on garde tout le monde
+    const artisansAffiches = categorie 
+        ? artisans.filter(artisan => artisan.category === categorie || artisan.categorie === categorie) 
+        : artisans;
 
-        // Filtre par recherche (quand on utilise la barre de recherche)
-        const matchRecherche = termeRecherche 
-            ? (artisan.nom.toLowerCase().includes(termeRecherche.toLowerCase()) || 
-               artisan.metier.toLowerCase().includes(termeRecherche.toLowerCase()) ||
-               artisan.ville.toLowerCase().includes(termeRecherche.toLowerCase()))
-            : true;
-
-        // On affiche l'artisan seulement s'il valide les filtres actifs
-        return matchCategorie && matchRecherche;
-    });
-
-    // Fonction des étoiles dynamiques
+    // 2. INTÉGRATION DE LA FONCTION DES ÉTOILES
     const afficherEtoiles = (note) => {
         const noteNum = parseFloat(note); 
         const etoilesPleines = Math.floor(noteNum); 
@@ -58,32 +42,30 @@ function ListeArtisans() {
         );
     };
 
-    // 3. ON ADAPTE LE TITRE DE LA PAGE SELON LA SITUATION
-    let titrePage = "Tous nos artisans";
-    if (termeRecherche) {
-        titrePage = `Résultats de recherche pour "${termeRecherche}"`;
-    } else if (categorie) {
-        titrePage = `Nos artisans : ${categorie}`;
-    }
-
     return (
         <main className="container py-5">
             <Helmet>
-                <title>{titrePage} - Trouve Ton Artisan</title>
-                <meta name="description" content="Découvrez notre liste d'artisans qualifiés." />
+                <title>
+                    {categorie 
+                        ? `Artisans en ${categorie} - Trouve Ton Artisan` 
+                        : `Tous nos artisans - Trouve Ton Artisan`}
+                </title>
+                <meta 
+                    name="description" 
+                    content={`Découvrez notre liste d'artisans qualifiés en ${categorie || 'tous domaines'} dans la région Auvergne-Rhône-Alpes.`} 
+                />
             </Helmet>
 
             <section>
                 <h1 className="text-center mb-5 text-primary fw-bold">
-                    {titrePage}
+                    {categorie ? `Nos artisans : ${categorie}` : "Tous nos artisans"}
                 </h1>
                 
                 <div className="row g-4">
-                    {/* Gestion du cas où aucun artisan n'est trouvé */}
+                    {/* S'il n'y a aucun artisan dans la catégorie, on affiche un petit message sympa */}
                     {artisansAffiches.length === 0 ? (
                         <div className="col-12 text-center py-5">
-                            <p className="fs-4 text-muted">Aucun artisan ne correspond à votre recherche.</p>
-                            <Link to="/artisans" className="btn btn-outline-primary mt-3">Voir tous les artisans</Link>
+                            <p className="fs-4 text-muted">Aucun artisan trouvé pour cette catégorie.</p>
                         </div>
                     ) : (
                         artisansAffiches.map((artisan) => (
@@ -101,6 +83,7 @@ function ListeArtisans() {
                                             <p className="text-primary fw-bold mb-1">{artisan.metier}</p>
                                             <p className="text-muted small mb-3">{artisan.ville}</p>
                                             
+                                            {/* Remplacement des étoiles statiques par notre belle fonction */}
                                             <p className="text-warning fw-bold mb-0 fs-5">
                                                 {afficherEtoiles(artisan.note)} <span className="text-dark ms-2 fs-6">{artisan.note}/5</span>
                                             </p>
