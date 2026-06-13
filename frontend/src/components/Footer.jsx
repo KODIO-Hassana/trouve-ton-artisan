@@ -28,13 +28,13 @@ function Footer() {
                     <i className="fas fa-home"></i>
                 </Link>
                 <Link to="/favoris" className="text-dark fs-4">
-                    <i className="far fa-bookmark"></i>
+                    <i className="fas fa-bookmark"></i>
                 </Link>
                 <Link to="/artisans" className="text-dark fs-4">
                     <i className="fas fa-user-friends"></i>
                 </Link>
                 <Link to="/profil" className="text-dark fs-4">
-                    <i className="far fa-user"></i>
+                    <i className="fas fa-user"></i>
                 </Link>
             </nav>
         </>

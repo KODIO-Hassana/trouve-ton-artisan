@@ -1,28 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const NotFound = () => {
   return (
-    // Utilisation des classes Bootstrap (container, text-center, my-5)
-    <div className="container text-center my-5 min-vh-100">
+    <main className="container text-center py-5">
+      <Helmet>
+        <title>Page Introuvable - Trouve Ton Artisan</title>
+      </Helmet>
+
       <img 
         src="/img/404-image.jpg"
         alt="Illustration Erreur 404" 
-        className="img-fluid mb-4" 
+        className="img-fluid mb-4 rounded" 
         style={{ maxWidth: '400px' }} 
       />
       
-      {/* text-primary va automatiquement utiliser le bleu #0074c7 grâce à notre Sass ! */}
-      <h1 className="display-4 fw-bold text-primary">Page non trouvée</h1>
+      <h1 className="display-4 fw-bold text-primary mb-3">Page non trouvée</h1>
       <p className="lead text-muted mb-4">
         La page que vous avez demandée n'existe pas ou a été déplacée.
       </p>
       
-      {/* btn-primary utilise aussi notre bleu officiel */}
-      <Link to="/" className="btn btn-primary btn-lg">
+      <Link to="/" className="btn btn-primary btn-lg shadow-sm">
         Retourner à l'accueil
       </Link>
-    </div>
+    </main>
   );
 };
 

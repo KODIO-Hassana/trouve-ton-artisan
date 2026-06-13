@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 function Artisan() {
@@ -24,25 +24,7 @@ function Artisan() {
             });
     }, [id]);
 
-    const afficherEtoiles = (note) => {
-        const noteNum = parseFloat(note); 
-        const etoilesPleines = Math.floor(noteNum); 
-        const aDemiEtoile = noteNum % 1 !== 0; 
-        const etoilesVides = 5 - etoilesPleines - (aDemiEtoile ? 1 : 0); 
-
-        return (
-            <>
-                {[...Array(etoilesPleines)].map((_, i) => (
-                    <i key={`pleine-${i}`} className="fas fa-star"></i>
-                ))}
-                {aDemiEtoile && <i className="fas fa-star-half-alt"></i>}
-                {[...Array(etoilesVides)].map((_, i) => (
-                    <i key={`vide-${i}`} className="far fa-star"></i>
-                ))}
-            </>
-        );
-    };
-
+    // Utilisation des classes Bootstrap pour centrer (text-center) et espacer (py-5)
     if (chargement) return <main className="container text-center py-5"><h2>Chargement...</h2></main>;
     if (!artisan) return <main className="container text-center py-5"><h2>Artisan introuvable.</h2></main>;
 
@@ -53,7 +35,7 @@ function Artisan() {
                 <meta name="description" content={`Découvrez ${artisan.nom}, professionnel à ${artisan.ville}.`} />
             </Helmet>
 
-            {/* Bannière */}
+            {/* La grande bannière du haut (style conservé car url dynamique) */}
             <div 
                 className="w-100" 
                 style={{ 
@@ -66,58 +48,46 @@ function Artisan() {
 
             <div className="container mt-4">
                 
-                {/* En-tête */}
+                {/* L'en-tête : d-flex, flex-md-row (colonne sur mobile, ligne sur PC), align-items-md-center */}
                 <header className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mt-3 mb-4">
                     <div className="mb-3 mb-md-0">
+                        {/* display-5 gère la taille du titre, fw-bold le met en gras */}
                         <h1 className="display-5 fw-bold text-dark mb-1">{artisan.nom}</h1>
                         <p className="fs-5 text-primary fw-bold mb-1">{artisan.metier} - <span className="text-muted fw-normal">{artisan.ville}</span></p>
-                        <p className="text-warning fs-5 fw-bold mb-0">
-                            {afficherEtoiles(artisan.note)} <span className="text-dark ms-2 fs-6">{artisan.note}/5</span>
-                        </p>
+                        <p className="text-warning fs-5 fw-bold mb-0">☆ {artisan.note}/5</p>
                     </div>
-                    <Link to="/contact" className="btn btn-primary btn-lg shadow-sm fw-bold">
+                    {/* btn-primary récupère notre bleu configuré dans Sass, shadow-sm ajoute une petite ombre */}
+                    <button className="btn btn-primary btn-lg shadow-sm">
                         Contacter
-                    </Link>
+                    </button>
                 </header>
 
                 <hr className="my-4 text-muted" />
 
                 {/* Section Notre Histoire et Infos Pratiques */}
                 <section className="row g-4 mb-5">
+                    {/* col-lg-8 prend 8 colonnes sur 12 sur PC, et toute la largeur sur mobile */}
                     <article className="col-12 col-lg-8">
-                        {/* Renommé en "Notre histoire" pour coller au Figma */}
-                        <h2 className="text-dark fw-bold mb-3">Notre histoire</h2>
-                        <p className="lead text-dark" style={{ lineHeight: '1.8' }}>{artisan.description}</p>
+                        <h2 className="text-secondary mb-3">Notre histoire</h2>
+                        <p className="lead" style={{ lineHeight: '1.8' }}>{artisan.description}</p>
                     </article>
 
+                    {/* Bloc gris statique : bg-light remplace ton backgroundColor, rounded-3 arrondit les angles */}
                     <aside className="col-12 col-lg-4">
-                        <div className="bg-light p-4 rounded-3 shadow-sm h-100 border">
-                            <h3 className="h5 text-dark fw-bold mb-4">Informations pratiques</h3>
-                            <ul className="list-unstyled lh-lg fs-6 mb-0">
-                                <li className="mb-3">
-                                    <i className="fas fa-map-marker-alt text-secondary me-2"></i> 
-                                    <strong>Lieu :</strong> {artisan.ville}
-                                </li>
-                                {artisan.email && (
-                                    <li className="mb-3">
-                                        <i className="fas fa-envelope text-secondary me-2"></i> 
-                                        <a href={`mailto:${artisan.email}`} className="text-decoration-none text-dark">{artisan.email}</a>
-                                    </li>
-                                )}
-                                {artisan.website && (
-                                    <li className="mb-3">
-                                        <i className="fas fa-globe text-secondary me-2"></i> 
-                                        <a href={artisan.website} target="_blank" rel="noreferrer" className="text-decoration-none text-primary">{artisan.website}</a>
-                                    </li>
-                                )}
+                        <div className="bg-light p-4 rounded-3 shadow-sm h-100">
+                            <h3 className="h4 text-primary mb-4">Informations pratiques</h3>
+                            <ul className="list-unstyled lh-lg fs-5 mb-0">
+                                <li className="mb-2">📍 12 Rue de la République, {artisan.ville}</li>
+                                <li className="mb-2">📞 04 78 00 00 00</li>
+                                <li>🕒 Ouvert du Lundi au Samedi : 9h - 19h</li>
                             </ul>
                         </div>
                     </aside>
                 </section>
 
-                {/* NOUVELLE SECTION RÉINTÉGRÉE : Nos spécialités */}
+                {/* Section Nos Spécialités */}
                 <section className="mb-5">
-                    <h2 className="text-dark fw-bold mb-4">Nos spécialités</h2>
+                    <h2 className="text-secondary mb-4">Nos spécialités</h2>
                     <div className="row g-3">
                         {/* col-6 = 2 images par ligne sur mobile, col-md-3 = 4 images sur PC */}
                         <div className="col-6 col-md-3">
@@ -136,38 +106,33 @@ function Artisan() {
                 </section>
 
                 {/* Section Avis Clients */}
-                <section className="mb-5 bg-light p-4 rounded-3 border">
+                <section className="mb-5">
                     <div className="d-flex justify-content-between align-items-center mb-4">
-                        <h2 className="text-dark fw-bold mb-0 h3">Avis clients</h2>
+                        <h2 className="text-secondary mb-0">Avis clients</h2>
                         <a href="#tout-voir" className="text-primary text-decoration-none fw-bold">Voir tous les avis →</a>
                     </div>
                     
+                    {/* row g-4 crée une grille aérée */}
                     <div className="row g-4">
                         <div className="col-12 col-md-4">
                             <div className="card h-100 p-4 border-0 shadow-sm rounded-3">
-                                <p className="text-warning mb-2 fs-5">
-                                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                                </p>
-                                <p className="card-text text-dark fst-italic">"Prestation impeccable et artisan très à l'écoute. Le résultat correspond parfaitement à mes attentes."</p>
-                                <p className="fw-bold mb-0 mt-auto text-dark">- Sophie T.</p>
+                                <p className="text-warning mb-2 fs-5">★★★★★</p>
+                                <p className="card-text">"Le meilleur praliné de la région ! Un vrai savoir-faire artisanal que l'on ressent à chaque bouchée."</p>
+                                <p className="fw-bold mb-0 mt-auto">Sophie T.</p>
                             </div>
                         </div>
                         <div className="col-12 col-md-4">
                             <div className="card h-100 p-4 border-0 shadow-sm rounded-3">
-                                <p className="text-warning mb-2 fs-5">
-                                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
-                                </p>
-                                <p className="card-text text-dark fst-italic">"Professionnel, ponctuel et minutieux. Je recommande les yeux fermés pour tout type de projet."</p>
-                                <p className="fw-bold mb-0 mt-auto text-dark">- Marc D.</p>
+                                <p className="text-warning mb-2 fs-5">★★★★★</p>
+                                <p className="card-text">"Une superbe découverte. Les créations originales aux épices sont incroyables et l'accueil en boutique est toujours chaleureux."</p>
+                                <p className="fw-bold mb-0 mt-auto">Marc D.</p>
                             </div>
                         </div>
                         <div className="col-12 col-md-4">
                             <div className="card h-100 p-4 border-0 shadow-sm rounded-3">
-                                <p className="text-warning mb-2 fs-5">
-                                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="far fa-star"></i>
-                                </p>
-                                <p className="card-text text-dark fst-italic">"Un vrai savoir-faire et des conseils très pertinents. Le rapport qualité/prix est excellent."</p>
-                                <p className="fw-bold mb-0 mt-auto text-dark">- Antoine L.</p>
+                                <p className="text-warning mb-2 fs-5">★★★★★</p>
+                                <p className="card-text">"Le coffret dégustation est une véritable merveille ! Mention spéciale pour les ganaches qui ont fait l'unanimité à la maison."</p>
+                                <p className="fw-bold mb-0 mt-auto">Antoine L.</p>
                             </div>
                         </div>
                     </div>
