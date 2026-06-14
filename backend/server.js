@@ -12,7 +12,16 @@ const app = express();
 app.use(cors());
 
 // Permet de lire les données envoyées en JSON
-app.use(express.json());
+// app.use(express.json());
+
+// Configuration stricte des CORS (Sécurité)
+const corsOptions = {
+    origin: 'https://trouve-ton-artisan-phi.vercel.app', // ⚠️ INSÈRE TON VRAI LIEN VERCEL ICI
+    optionsSuccessStatus: 200
+};
+
+// Application de la règle de sécurité
+app.use(cors(corsOptions));
 
 // 3. Configuration de la connexion à la base de données
 const db = mysql.createConnection({
