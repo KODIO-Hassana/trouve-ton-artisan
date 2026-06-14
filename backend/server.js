@@ -64,9 +64,9 @@ app.get('/api/artisans', (req, res) => {
             a.site_web_artisan AS site,
             a.image AS image,
             a.is_top_artisan AS top
-        FROM ARTISAN a
-        JOIN SPECIALITE s ON a.id_specialite = s.id_specialite
-        JOIN CATEGORIE c ON s.id_categorie = c.id_categorie
+        FROM artisan a
+        JOIN specialite s ON a.id_specialite = s.id_specialite
+        JOIN categorie c ON s.id_categorie = c.id_categorie
     `;
 
     db.query(sql, (err, results) => {
@@ -99,9 +99,9 @@ app.get('/api/artisans/:id', (req, res) => {
             a.site_web_artisan AS site,
             a.image AS image,
             a.is_top_artisan AS top
-        FROM ARTISAN a
-        JOIN SPECIALITE s ON a.id_specialite = s.id_specialite
-        JOIN CATEGORIE c ON s.id_categorie = c.id_categorie
+        FROM artisan a
+        JOIN specialite s ON a.id_specialite = s.id_specialite
+        JOIN categorie c ON s.id_categorie = c.id_categorie
         WHERE a.id_artisan = ?
     `;
 
