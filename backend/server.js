@@ -16,7 +16,7 @@ app.use(cors());
 
 // Configuration stricte des CORS (Sécurité)
 const corsOptions = {
-    origin: 'https://trouve-ton-artisan-phi.vercel.app', // ⚠️ INSÈRE TON VRAI LIEN VERCEL ICI
+    origin: 'https://trouve-ton-artisan-phi.vercel.app', 
     optionsSuccessStatus: 200
 };
 
