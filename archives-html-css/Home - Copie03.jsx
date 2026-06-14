@@ -8,7 +8,8 @@ function Home() {
 
     // 2. On interroge l'API au chargement de la page
     useEffect(() => {
-        fetch('http://localhost:5000/api/artisans')
+        // fetch('http://localhost:5000/api/artisans')
+        fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
             .then(reponse => reponse.json())
             .then(donnees => {
                 // 3. On filtre les résultats : on ne garde que ceux où "top" est égal à 1 (true en SQL)
