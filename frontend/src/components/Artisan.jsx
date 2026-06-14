@@ -8,7 +8,8 @@ function Artisan() {
     const [chargement, setChargement] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/api/artisans/${id}`)
+        // fetch(`http://localhost:5000/api/artisans/${id}`)
+        fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
             .then(reponse => {
                 if (!reponse.ok) throw new Error("Artisan introuvable");
                 return reponse.json();

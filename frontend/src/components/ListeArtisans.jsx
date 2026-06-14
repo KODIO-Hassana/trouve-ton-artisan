@@ -12,7 +12,8 @@ function ListeArtisans() {
     const termeRecherche = queryParams.get('recherche'); // Récupère le mot après ?recherche=
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/artisans')
+        // fetch('http://localhost:5000/api/artisans')
+        fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
             .then(reponse => reponse.json())
             .then(donnees => {
                 setArtisans(donnees);
