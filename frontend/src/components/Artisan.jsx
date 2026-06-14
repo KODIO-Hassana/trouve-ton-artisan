@@ -9,7 +9,8 @@ function Artisan() {
 
     useEffect(() => {
         // fetch(`http://localhost:5000/api/artisans/${id}`)
-        fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
+        // fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
+        fetch(`https://trouve-ton-artisan-najt.onrender.com/api/artisans/${id}`)
             .then(reponse => {
                 if (!reponse.ok) throw new Error("Artisan introuvable");
                 return reponse.json();

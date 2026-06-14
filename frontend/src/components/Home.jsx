@@ -9,7 +9,8 @@ function Home() {
 
     useEffect(() => {
         // fetch('http://localhost:5000/api/artisans')
-        fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
+        // fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
+        fetch(`https://trouve-ton-artisan-najt.onrender.com/api/artisans`)
             .then(reponse => reponse.json())
             .then(donnees => {
                 const tops = donnees.filter(artisan => artisan.top === true);
