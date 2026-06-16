@@ -16,8 +16,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // 3. Importation de nos routes structurées
-const artisanRoutes = require('./Routes/artisanRoutes');
-const contactRoutes = require('./Routes/contactRoutes');
+const artisanRoutes = require('./routes/artisanRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 
 // 4. Utilisation des routes
 app.use('/api/artisans', artisanRoutes);
