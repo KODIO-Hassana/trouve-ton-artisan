@@ -16,12 +16,40 @@ const Contact = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Le 'required' du HTML5 bloque l'envoi si les champs sont vides ou si l'email est mal formaté
+  //   console.log("Message général envoyé :", formData);
+  //   setIsSubmitted(true);
+  //   setFormData({ nom: '', email: '', sujet: '', message: '' });
+  // };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Le 'required' du HTML5 bloque l'envoi si les champs sont vides ou si l'email est mal formaté
-    console.log("Message général envoyé :", formData);
-    setIsSubmitted(true);
-    setFormData({ nom: '', email: '', sujet: '', message: '' });
+    
+    try {
+      // 1. On utilise fetch pour envoyer les données à notre nouvelle route backend
+      const response = await fetch('trouve-ton-artisan-najt.onrender.com/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData), // On transforme nos données React en texte JSON pour le voyage
+      });
+
+      // 2. On vérifie si le backend a bien répondu avec un succès (statut 200)
+      if (response.ok) {
+        console.log("✅ Message envoyé avec succès au backend !");
+        setIsSubmitted(true); // Affiche ton message de succès à l'écran
+        setFormData({ nom: '', email: '', sujet: '', message: '' }); // Vide les champs
+      } else {
+        alert("Une erreur s'est produite lors de l'envoi du message.");
+      }
+      
+    } catch (error) {
+      console.error("❌ Erreur de connexion avec le serveur :", error);
+      alert("Impossible de joindre le serveur pour envoyer le message.");
+    }
   };
 
   return (
