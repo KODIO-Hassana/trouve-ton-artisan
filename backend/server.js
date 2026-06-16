@@ -7,7 +7,7 @@ const app = express();
 
 // 2. Middlewares : Sécurité CORS stricte
 const corsOptions = {
-    origin: 'https://trouve-ton-artisan-phi.vercel.app', // Seule cette adresse a le droit de lire les données
+    origin: ['https://trouve-ton-artisan-phi.vercel.app', 'http://localhost:3000', 'http://localhost:5173'], // Seule cette adresse a le droit de lire les données
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
@@ -17,9 +17,11 @@ app.use(express.json());
 
 // 3. Importation de nos routes structurées
 const artisanRoutes = require('./routes/artisanRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 
 // 4. Utilisation des routes
 app.use('/api/artisans', artisanRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Route de test basique
 app.get('/', (req, res) => {
