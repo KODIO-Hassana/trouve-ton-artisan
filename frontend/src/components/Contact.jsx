@@ -29,7 +29,7 @@ const Contact = () => {
         body: JSON.stringify({
           service_id: 'service_zdt3zgq',   // <-- À REMPLACER
           template_id: 'template_trrlo77', // <-- À REMPLACER
-          user_id: 'f944nGQxKe7lPimbl1LEp',       // <-- À REMPLACER
+          user_id: 'oCYI_5k6Hjo3Ye2WG',       // <-- À REMPLACER
           template_params: {
             nom: formData.nom,
             email: formData.email,
