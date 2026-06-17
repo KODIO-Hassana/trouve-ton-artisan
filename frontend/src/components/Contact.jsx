@@ -29,7 +29,7 @@ const Contact = () => {
     
     try {
       // 1. On utilise fetch pour envoyer les données à notre nouvelle route backend
-      const response = await fetch('trouve-ton-artisan-najt.onrender.com/api/contact', {
+      const response = await fetch('https://trouve-ton-artisan-najt.onrender.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
