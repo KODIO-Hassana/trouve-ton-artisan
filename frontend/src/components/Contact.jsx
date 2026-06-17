@@ -24,31 +24,68 @@ const Contact = () => {
   //   setFormData({ nom: '', email: '', sujet: '', message: '' });
   // };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+    
+  //   try {
+  //     // 1. On utilise fetch pour envoyer les données à notre nouvelle route backend
+  //     const response = await fetch('https://trouve-ton-artisan-najt.onrender.com/api/contact', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formData), // On transforme nos données React en texte JSON pour le voyage
+  //     });
+
+  //     // 2. On vérifie si le backend a bien répondu avec un succès (statut 200)
+  //     if (response.ok) {
+  //       console.log("✅ Message envoyé avec succès au backend !");
+  //       setIsSubmitted(true); // Affiche ton message de succès à l'écran
+  //       setFormData({ nom: '', email: '', sujet: '', message: '' }); // Vide les champs
+  //     } else {
+  //       alert("Une erreur s'est produite lors de l'envoi du message.");
+  //     }
+      
+  //   } catch (error) {
+  //     console.error("❌ Erreur de connexion avec le serveur :", error);
+  //     alert("Impossible de joindre le serveur pour envoyer le message.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
-      // 1. On utilise fetch pour envoyer les données à notre nouvelle route backend
-      const response = await fetch('https://trouve-ton-artisan-najt.onrender.com/api/contact', {
+      // Nous envoyons directement les données à l'API sécurisée d'EmailJS
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // On transforme nos données React en texte JSON pour le voyage
+        body: JSON.stringify({
+          service_id: 'service_zdt3zgq',   // <-- Colle ton Service ID (ex: service_...)
+          template_id: 'template_trrlo77', // <-- Colle ton Template ID (ex: template_...)
+          user_id: 'f944nGQxKe7lPimbl1LEp',       // <-- Colle ta Public Key
+          template_params: {
+            // Ces clés doivent correspondre exactement aux accolades {{ }} de ton modèle
+            nom: formData.nom,
+            email: formData.email,
+            sujet: formData.sujet,
+            message: formData.message
+          }
+        }),
       });
 
-      // 2. On vérifie si le backend a bien répondu avec un succès (statut 200)
       if (response.ok) {
-        console.log("✅ Message envoyé avec succès au backend !");
-        setIsSubmitted(true); // Affiche ton message de succès à l'écran
-        setFormData({ nom: '', email: '', sujet: '', message: '' }); // Vide les champs
+        setIsSubmitted(true);
+        setFormData({ nom: '', email: '', sujet: '', message: '' });
+        alert('Votre message a été envoyé avec succès !');
       } else {
         alert("Une erreur s'est produite lors de l'envoi du message.");
       }
-      
     } catch (error) {
-      console.error("❌ Erreur de connexion avec le serveur :", error);
-      alert("Impossible de joindre le serveur pour envoyer le message.");
+      console.error('Erreur:', error);
+      alert('Impossible de joindre le serveur pour envoyer le message.');
     }
   };
 
