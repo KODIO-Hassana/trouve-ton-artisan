@@ -1,9 +1,8 @@
-// 1. On importe la connexion à la base de données
+// 1. On importe la connexion à la base de données qu'on a créée à l'étape 1
 const db = require('../config/db');
 
-// 2. Fonction pour récupérer TOUS les artisans (version allégée pour les listes)
+// 2. Fonction pour récupérer TOUS les artisans
 exports.getAllArtisans = (req, res) => {
-    // ⚠️ On enlève l'email, le site web et la description pour alléger le flux !
     const sql = `
         SELECT 
             a.id_artisan AS id, 
@@ -12,6 +11,9 @@ exports.getAllArtisans = (req, res) => {
             c.nom_categorie AS categorie, 
             a.ville_artisan AS ville, 
             a.note_artisan AS note,
+            a.description_artisan AS description,
+            a.email_artisan AS email,
+            a.site_web_artisan AS site,
             a.image AS image,
             a.is_top_artisan AS top
         FROM artisan a
@@ -28,45 +30,10 @@ exports.getAllArtisans = (req, res) => {
     });
 };
 
-// 3. NOUVELLE Fonction pour filtrer par catégorie avec SQL (Clause WHERE)
-exports.getArtisansByCategory = (req, res) => {
-    const categorie = req.params.categorie;
-    
-    const sql = `
-        SELECT 
-            a.id_artisan AS id, 
-            a.nom_artisan AS nom, 
-            s.nom_specialite AS metier, 
-            c.nom_categorie AS categorie, 
-            a.ville_artisan AS ville, 
-            a.note_artisan AS note,
-            a.image AS image,
-            a.is_top_artisan AS top
-        FROM artisan a
-        JOIN specialite s ON a.id_specialite = s.id_specialite
-        JOIN categorie c ON s.id_categorie = c.id_categorie
-        WHERE c.nom_categorie = ?
-    `;
-
-    db.query(sql, [categorie], (err, results) => {
-        if (err) {
-            console.error("❌ Erreur lors du filtrage par catégorie :", err);
-            return res.status(500).json({ message: "Erreur serveur" });
-        }
-        
-        // Gestion du résultat vide demandée par le correcteur
-        if (results.length === 0) {
-            return res.status(404).json({ message: "Aucun artisan trouvé dans cette catégorie" });
-        }
-        res.json(results);
-    });
-};
-
-// 4. Fonction pour récupérer UN SEUL artisan par son ID (Garde toutes les infos)
+// 3. Fonction pour récupérer UN SEUL artisan par son ID
 exports.getArtisanById = (req, res) => {
     const artisanId = req.params.id;
     
-    // Ici, on a besoin de TOUTES les informations pour la page détail
     const sql = `
         SELECT 
             a.id_artisan AS id, 
@@ -94,6 +61,7 @@ exports.getArtisanById = (req, res) => {
         if (results.length === 0) {
             return res.status(404).json({ message: "Artisan non trouvé" });
         } 
+        // On renvoie le premier (et unique) résultat
         res.json(results[0]);
     });
 };
