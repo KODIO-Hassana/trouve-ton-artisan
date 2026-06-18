@@ -34,11 +34,22 @@ Le projet est actuellement hébergé et sécurisé (politique CORS stricte) en p
 3. Exécutez le script SQL fourni à la racine du projet nommé `creation.sql` pour générer la structure de la base de données.
 4. Exécutez ensuite le script `alimentation.sql` pour insérer le jeu d'essai des artisans.
 
-### Étape 2 : Lancement de l'API (Backend)
+<!-- ### Étape 2 : Lancement de l'API (Backend)
 1. Ouvrez un terminal et naviguez dans le dossier contenant le backend : `cd chemin/vers/le/dossier/backend`.
 2. Installez les dépendances requises : `npm install`.
 3. Lancez le serveur Express : `npm start`.
-(L'API sera alors accessible sur le port 5000).
+(L'API sera alors accessible sur le port 5000). -->
+
+### Étape 2 : Configuration et Lancement de l'API (Backend)
+1. Ouvrez un terminal et naviguez dans le dossier contenant le backend : `cd chemin/vers/le/dossier/backend`.
+2. Installez les dépendances requises : `npm install`.
+3. **Variables d'environnement :** Créez un fichier `.env` à la racine du dossier backend. Ajoutez-y vos identifiants locaux en suivant ce modèle :
+   ```env
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=votre_mot_de_passe
+   DB_NAME=trouve_ton_artisan
+   PORT=5000
 
 ### Étape 3 : Lancement de l'application React (Frontend)
 1. Ouvrez un nouveau terminal et naviguez dans le dossier du frontend : `cd chemin/vers/le/dossier/frontend`.

@@ -6,6 +6,7 @@ const MentionsLegales = () => {
     <main className="container py-5">
       <Helmet>
         <title>Mentions Légales - Trouve Ton Artisan</title>
+        <meta name="description" content="Consultez les mentions légales et la politique de confidentialité de Trouve Ton Artisan en Auvergne-Rhône-Alpes." />
       </Helmet>
 
       {/* Le conteneur principal avec fond blanc, ombre et coins arrondis */}

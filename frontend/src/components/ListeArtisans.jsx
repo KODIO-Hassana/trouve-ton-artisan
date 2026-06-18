@@ -71,8 +71,8 @@ function ListeArtisans() {
     return (
         <main className="container py-5">
             <Helmet>
-                <title>{titrePage} - Trouve Ton Artisan</title>
-                <meta name="description" content="Découvrez notre liste d'artisans qualifiés." />
+                <title>Liste des artisans - Trouve Ton Artisan</title>
+                <meta name="description" content="Découvrez la liste complète de nos artisans qualifiés et filtrez-les par catégorie." />
             </Helmet>
 
             <section>

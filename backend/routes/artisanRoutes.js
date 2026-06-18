@@ -8,6 +8,9 @@ const artisanController = require('../controllers/artisanController');
 // Quand on va sur l'adresse de base des artisans (/api/artisans), on lance la fonction getAllArtisans
 router.get('/', artisanController.getAllArtisans);
 
+// 2. NOUVELLE Route pour filtrer par catégorie directement via SQL
+router.get('/categorie/:categorie', artisanController.getArtisansByCategory);
+
 // Quand on ajoute un ID à la fin (/api/artisans/3), on lance la fonction getArtisanById
 router.get('/:id', artisanController.getArtisanById);
 

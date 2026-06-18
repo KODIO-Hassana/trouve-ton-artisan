@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Ajout de useNavigate ici
 
+import { Helmet } from 'react-helmet-async';
+
 function Home() {
     // 1. LES VARIABLES SONT BIEN À L'INTÉRIEUR DE LA FONCTION
     const [artisansDuMois, setArtisansDuMois] = useState([]);
@@ -49,6 +51,10 @@ function Home() {
 
     return (
         <main>
+            <Helmet>
+                <title>Accueil - Trouve Ton Artisan en Auvergne-Rhône-Alpes</title>
+                <meta name="description" content="Trouvez facilement un artisan qualifié dans la région Auvergne-Rhône-Alpes (Bâtiment, Services, Fabrication, Alimentation)."/>
+            </Helmet>
             <section className="banniere-accueil px-3">
                 <div className="contenu-banniere container w-100">
                     <h1 className="fw-bold text-white mb-4 fs-1">
