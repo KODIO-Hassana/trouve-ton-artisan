@@ -74,6 +74,43 @@ function Home() {
                 </div>
             </section>
 
+            {/* NOUVELLE SECTION : Comment trouver mon artisan ? */}
+            <section className="py-5 bg-light">
+                <div className="container">
+                    <h2 className="text-center text-primary fw-bold mb-5">Comment trouver mon artisan ?</h2>
+                    <div className="row g-4 text-center">
+                        
+                        {/* Étape 1 */}
+                        <div className="col-md-4">
+                            <div className="bg-white p-4 rounded-3 shadow-sm h-100 border-0">
+                                <i className="fas fa-search fa-3x text-primary mb-3"></i>
+                                <h3 className="h5 fw-bold text-dark">1. Choisissez le domaine</h3>
+                                <p className="text-muted mb-0">Parcourez nos catégories (Bâtiment, Services, Fabrication, Alimentation) pour cibler votre besoin.</p>
+                            </div>
+                        </div>
+
+                        {/* Étape 2 */}
+                        <div className="col-md-4">
+                            <div className="bg-white p-4 rounded-3 shadow-sm h-100 border-0">
+                                <i className="fas fa-users fa-3x text-primary mb-3"></i>
+                                <h3 className="h5 fw-bold text-dark">2. Consultez les profils</h3>
+                                <p className="text-muted mb-0">Découvrez les artisans certifiés de la région, consultez leurs spécialités et les avis clients.</p>
+                            </div>
+                        </div>
+
+                        {/* Étape 3 */}
+                        <div className="col-md-4">
+                            <div className="bg-white p-4 rounded-3 shadow-sm h-100 border-0">
+                                <i className="fas fa-envelope fa-3x text-primary mb-3"></i>
+                                <h3 className="h5 fw-bold text-dark">3. Contactez-les</h3>
+                                <p className="text-muted mb-0">Utilisez notre formulaire de contact sécurisé pour envoyer directement votre demande de devis.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
             <section className="bg-light py-5">
                 <div className="container px-4">
                     <h2 className="text-center text-secondary mb-5 fw-bold">Artisans du mois</h2>
