@@ -22,6 +22,7 @@ app.use(express.json());
 // Utilisation de tes routes
 app.use('/api/artisans', artisanRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/categories', require('./routes/categorieRoutes'));
 
 // TRÈS IMPORTANT : La correction pour Render
 const PORT = process.env.PORT || 5000;

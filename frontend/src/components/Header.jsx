@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/img/Logo.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom'; // Ajout de useNavigate
 
@@ -13,12 +13,25 @@ function Header() {
     const navigate = useNavigate(); // NOUVEAU : L'outil pour rediriger
     const isHomePage = location.pathname === '/';
 
-    const categories = [
-        "Bâtiment",
-        "Services",
-        "Fabrication",
-        "Alimentation"
-    ];
+    // const categories = [
+    //     "Bâtiment",
+    //     "Services",
+    //     "Fabrication",
+    //     "Alimentation"
+    // ];
+
+    // On prépare une variable vide pour stocker les catégories
+    const [categories, setCategories] = useState([]);
+
+    // On va chercher les catégories dans la base de données au chargement du Header
+    useEffect(() => {
+        fetch('https://trouve-ton-artisan-najt.onrender.com/api/categories')
+            .then(reponse => reponse.json())
+            .then(donnees => {
+                setCategories(donnees);
+            })
+            .catch(erreur => console.error("Erreur de récupération des catégories :", erreur));
+    }, []);
 
     const basculerMenu = () => {
         setMenuOuvert(!menuOuvert);
@@ -88,13 +101,26 @@ function Header() {
                             <li className="nav-item">
                                 <Link className="nav-link text-primary" to="/" onClick={fermerTout}>Accueil</Link>
                             </li>
-                            {categories.map((categorie) => (
+                            {/* {categories.map((categorie) => (
                                 <li className="nav-item" key={categorie}>
                                     <Link className="nav-link text-primary" to={`/artisans/${categorie}`} onClick={fermerTout}>
                                         {categorie}
                                     </Link>
                                 </li>
+                            ))} */}
+
+                            {categories.map((cat) => (
+                                <li key={cat.id}>
+                                    <Link 
+                                        className="dropdown-item" 
+                                        to={`/artisans/${cat.nom}`} 
+                                        onClick={fermerTout}
+                                    >
+                                        {cat.nom}
+                                    </Link>
+                                </li>
                             ))}
+                            
                             <li className="nav-item">
                                 <Link className="nav-link text-primary" to="/contact" onClick={fermerTout}>Contact</Link>
                             </li>
