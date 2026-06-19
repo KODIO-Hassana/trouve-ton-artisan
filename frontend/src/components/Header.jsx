@@ -97,32 +97,41 @@ function Header() {
 
                     {/* LE MENU PRINCIPAL */}
                     <div className={`collapse navbar-collapse ${menuOuvert ? 'show' : ''} w-100`}>
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0 fw-bold gap-2 gap-lg-4 text-center mt-3 mt-lg-0">
+                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                            {/* Lien Accueil */}
                             <li className="nav-item">
-                                <Link className="nav-link text-primary" to="/" onClick={fermerTout}>Accueil</Link>
+                                <Link className="nav-link text-primary fw-bold" to="/" onClick={fermerTout}>Accueil</Link>
                             </li>
-                            {/* {categories.map((categorie) => (
-                                <li className="nav-item" key={categorie}>
-                                    <Link className="nav-link text-primary" to={`/artisans/${categorie}`} onClick={fermerTout}>
-                                        {categorie}
-                                    </Link>
-                                </li>
-                            ))} */}
 
-                            {categories.map((cat) => (
-                                <li key={cat.id}>
-                                    <Link 
-                                        className="dropdown-item" 
-                                        to={`/artisans/${cat.nom}`} 
-                                        onClick={fermerTout}
-                                    >
-                                        {cat.nom}
-                                    </Link>
-                                </li>
-                            ))}
-                            
+                            {/* Menu Déroulant Catégories */}
+                            <li className="nav-item dropdown">
+                                <span 
+                                    className="nav-link dropdown-toggle text-primary fw-bold" 
+                                    role="button" 
+                                    data-bs-toggle="dropdown" 
+                                    aria-expanded="false"
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    Catégories
+                                </span>
+                                <ul className="dropdown-menu shadow-sm border-0 mt-2">
+                                    {categories.map((cat) => (
+                                        <li key={cat.id}>
+                                            <Link 
+                                                className="dropdown-item py-2" 
+                                                to={`/artisans/${cat.nom}`} 
+                                                onClick={fermerTout}
+                                            >
+                                                {cat.nom}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+
+                            {/* Lien Contact */}
                             <li className="nav-item">
-                                <Link className="nav-link text-primary" to="/contact" onClick={fermerTout}>Contact</Link>
+                                <Link className="nav-link text-primary fw-bold" to="/contact" onClick={fermerTout}>Contact</Link>
                             </li>
                         </ul>
                     </div>
