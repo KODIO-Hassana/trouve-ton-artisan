@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../assets/img/Logo.png';
-import { Link, useLocation, useNavigate } from 'react-router-dom'; // Ajout de useNavigate
+import logo from '../assets/img/Logo.png'; 
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Header() {
     const [menuOuvert, setMenuOuvert] = useState(false);
     const [rechercheOuverte, setRechercheOuverte] = useState(false);
-    
-    // NOUVEAU : On crée une variable pour stocker le texte tapé dans la barre
-    const [termeRecherche, setTermeRecherche] = useState(''); 
-    
+    const [termeRecherche, setTermeRecherche] = useState('');
+    const [categories, setCategories] = useState([]); // Nos catégories depuis la BDD
+
     const location = useLocation();
-    const navigate = useNavigate(); // NOUVEAU : L'outil pour rediriger
+    const navigate = useNavigate();
     const isHomePage = location.pathname === '/';
 
-    // const categories = [
-    //     "Bâtiment",
-    //     "Services",
-    //     "Fabrication",
-    //     "Alimentation"
-    // ];
-
-    // On prépare une variable vide pour stocker les catégories
-    const [categories, setCategories] = useState([]);
-
-    // On va chercher les catégories dans la base de données au chargement du Header
+    // Récupération des catégories via l'API
     useEffect(() => {
         fetch('https://trouve-ton-artisan-najt.onrender.com/api/categories')
             .then(reponse => reponse.json())
             .then(donnees => {
-                setCategories(donnees);
+                if (Array.isArray(donnees)) {
+                    setCategories(donnees);
+                }
             })
             .catch(erreur => console.error("Erreur de récupération des catégories :", erreur));
     }, []);
@@ -48,57 +39,58 @@ function Header() {
         setRechercheOuverte(false);
     };
 
-    // NOUVEAU : La fonction qui se déclenche quand on appuie sur "Go" ou "Entrée"
     const soumettreRecherche = (e) => {
         e.preventDefault();
         if (termeRecherche.trim() !== '') {
-            // 1. On redirige vers la liste avec le mot-clé
             navigate(`/artisans?recherche=${termeRecherche}`);
-            // 2. On ferme la petite barre de recherche mobile
-            setRechercheOuverte(false);
-            // 3. On vide le champ pour la prochaine fois
-            setTermeRecherche(''); 
+            fermerTout();
+            setTermeRecherche('');
         }
     };
 
     return (
-        <header className="bg-white shadow-sm sticky-top position-relative">
-            <nav className="navbar navbar-expand-lg navbar-light py-2 py-md-3">
-                <div className="container d-flex justify-content-between align-items-center flex-wrap flex-lg-nowrap">
-                    
-                    {/* LE LOGO */}
-                    <Link className="navbar-brand m-0 p-0" to="/" onClick={fermerTout}>
-                        <img 
-                            src={logo} 
-                            alt="Logo Trouve ton artisan" 
-                            className="img-fluid" 
-                            style={{ maxHeight: '50px', objectFit: 'contain' }} 
-                        />
+        <header className="sticky-top bg-white shadow-sm">
+            <nav className="navbar navbar-expand-lg navbar-light py-3">
+                <div className="container">
+                    {/* Logo */}
+                    <Link className="navbar-brand" to="/" onClick={fermerTout}>
+                        <img src={logo} alt="Logo Trouve Ton Artisan" height="40" />
                     </Link>
 
-                    {/* BLOC MOBILE UNIQUEMENT */}
+                    {/* Boutons Mobile */}
                     <div className="d-flex align-items-center d-lg-none">
                         {!isHomePage && (
-                            <button 
-                                className="btn btn-link text-primary fs-4 me-3 p-0 text-decoration-none shadow-none" 
-                                onClick={basculerRecherche}
-                            >
+                            <button className="btn btn-outline-primary me-2 border-0" onClick={basculerRecherche} type="button">
                                 <i className="fas fa-search"></i>
                             </button>
                         )}
-                        <button 
-                            className="navbar-toggler border-0 shadow-none p-0" 
-                            type="button" 
-                            onClick={basculerMenu}
-                        >
+                        <button className="navbar-toggler border-0 shadow-none" type="button" onClick={basculerMenu}>
                             <span className="navbar-toggler-icon"></span>
                         </button>
                     </div>
 
-                    {/* LE MENU PRINCIPAL */}
-                    <div className={`collapse navbar-collapse ${menuOuvert ? 'show' : ''} w-100`}>
+                    {/* Menu Principal */}
+                    <div className={`collapse navbar-collapse ${menuOuvert ? 'show' : ''}`} id="navbarNav">
+                        
+                        {/* Barre de recherche (Desktop) */}
+                        {!isHomePage && (
+                            <form className="d-none d-lg-flex ms-4 me-auto w-50" role="search" onSubmit={soumettreRecherche}>
+                                <input 
+                                    className="form-control me-2 border-primary bg-light" 
+                                    type="search" 
+                                    placeholder="Rechercher un artisan..." 
+                                    value={termeRecherche}
+                                    onChange={(e) => setTermeRecherche(e.target.value)}
+                                />
+                                <button className="btn btn-primary" type="submit">
+                                    <i className="fas fa-search"></i>
+                                </button>
+                            </form>
+                        )}
+
+                        {/* Liens de navigation */}
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                            {/* Lien Accueil */}
+                            
                             <li className="nav-item">
                                 <Link className="nav-link text-primary fw-bold" to="/" onClick={fermerTout}>Accueil</Link>
                             </li>
@@ -115,21 +107,24 @@ function Header() {
                                     Catégories
                                 </span>
                                 <ul className="dropdown-menu shadow-sm border-0 mt-2">
-                                    {categories.map((cat) => (
-                                        <li key={cat.id}>
-                                            <Link 
-                                                className="dropdown-item py-2" 
-                                                to={`/artisans/${cat.nom}`} 
-                                                onClick={fermerTout}
-                                            >
-                                                {cat.nom}
-                                            </Link>
-                                        </li>
-                                    ))}
+                                    {categories.length > 0 ? (
+                                        categories.map((cat) => (
+                                            <li key={cat.id}>
+                                                <Link 
+                                                    className="dropdown-item py-2" 
+                                                    to={`/artisans/${cat.nom}`} 
+                                                    onClick={fermerTout}
+                                                >
+                                                    {cat.nom}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li><span className="dropdown-item py-2 text-muted fst-italic">Chargement...</span></li>
+                                    )}
                                 </ul>
                             </li>
 
-                            {/* Lien Contact */}
                             <li className="nav-item">
                                 <Link className="nav-link text-primary fw-bold" to="/contact" onClick={fermerTout}>Contact</Link>
                             </li>
@@ -138,13 +133,9 @@ function Header() {
                 </div>
             </nav>
 
-            {/* BARRE DE RECHERCHE DÉROULANTE MOBILE */}
+            {/* Barre de recherche déroulante mobile */}
             {rechercheOuverte && !isHomePage && (
-                <div 
-                    className="bg-light border-top py-3 px-3 d-lg-none shadow-sm position-absolute w-100" 
-                    style={{ zIndex: 1050, top: '100%' }}
-                >
-                    {/* NOUVEAU : On connecte le formulaire à notre fonction soumettreRecherche */}
+                <div className="bg-light border-top py-3 px-3 d-lg-none shadow-sm position-absolute w-100" style={{ zIndex: 1050, top: '100%' }}>
                     <form className="d-flex" role="search" onSubmit={soumettreRecherche}>
                         <input 
                             className="form-control me-2 border-primary" 
@@ -154,9 +145,7 @@ function Header() {
                             onChange={(e) => setTermeRecherche(e.target.value)}
                             autoFocus 
                         />
-                        <button className="btn btn-primary fw-bold" type="submit">
-                            Go
-                        </button>
+                        <button className="btn btn-primary fw-bold" type="submit">Go</button>
                     </form>
                 </div>
             )}
