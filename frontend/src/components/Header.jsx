@@ -5,14 +5,17 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 function Header() {
     const [menuOuvert, setMenuOuvert] = useState(false);
     const [rechercheOuverte, setRechercheOuverte] = useState(false);
+    
+    // NOUVEAU : On crée un état pour contrôler l'ouverture du menu Catégories
+    const [dropdownOuvert, setDropdownOuvert] = useState(false); 
+    
     const [termeRecherche, setTermeRecherche] = useState('');
-    const [categories, setCategories] = useState([]); // Nos catégories depuis la BDD
+    const [categories, setCategories] = useState([]); 
 
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/';
 
-    // Récupération des catégories via l'API
     useEffect(() => {
         fetch('https://trouve-ton-artisan-najt.onrender.com/api/categories')
             .then(reponse => reponse.json())
@@ -27,16 +30,19 @@ function Header() {
     const basculerMenu = () => {
         setMenuOuvert(!menuOuvert);
         setRechercheOuverte(false);
+        setDropdownOuvert(false);
     };
 
     const basculerRecherche = () => {
         setRechercheOuverte(!rechercheOuverte);
         setMenuOuvert(false);
+        setDropdownOuvert(false);
     };
 
     const fermerTout = () => {
         setMenuOuvert(false);
         setRechercheOuverte(false);
+        setDropdownOuvert(false); // On ferme aussi le dropdown quand on clique sur un lien
     };
 
     const soumettreRecherche = (e) => {
@@ -52,12 +58,10 @@ function Header() {
         <header className="sticky-top bg-white shadow-sm">
             <nav className="navbar navbar-expand-lg navbar-light py-3">
                 <div className="container">
-                    {/* Logo */}
                     <Link className="navbar-brand" to="/" onClick={fermerTout}>
                         <img src={logo} alt="Logo Trouve Ton Artisan" height="40" />
                     </Link>
 
-                    {/* Boutons Mobile */}
                     <div className="d-flex align-items-center d-lg-none">
                         {!isHomePage && (
                             <button className="btn btn-outline-primary me-2 border-0" onClick={basculerRecherche} type="button">
@@ -69,10 +73,8 @@ function Header() {
                         </button>
                     </div>
 
-                    {/* Menu Principal */}
                     <div className={`collapse navbar-collapse ${menuOuvert ? 'show' : ''}`} id="navbarNav">
                         
-                        {/* Barre de recherche (Desktop) */}
                         {!isHomePage && (
                             <form className="d-none d-lg-flex ms-4 me-auto w-50" role="search" onSubmit={soumettreRecherche}>
                                 <input 
@@ -88,25 +90,25 @@ function Header() {
                             </form>
                         )}
 
-                        {/* Liens de navigation */}
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                             
                             <li className="nav-item">
                                 <Link className="nav-link text-primary fw-bold" to="/" onClick={fermerTout}>Accueil</Link>
                             </li>
 
-                            {/* Menu Déroulant Catégories */}
-                            <li className="nav-item dropdown">
+                            {/* Menu Déroulant Catégories GÉRÉ PAR REACT */}
+                            <li className="nav-item dropdown position-relative">
                                 <span 
-                                    className="nav-link dropdown-toggle text-primary fw-bold" 
+                                    className="nav-link text-primary fw-bold" 
                                     role="button" 
-                                    data-bs-toggle="dropdown" 
-                                    aria-expanded="false"
+                                    onClick={() => setDropdownOuvert(!dropdownOuvert)}
                                     style={{ cursor: 'pointer' }}
                                 >
-                                    Catégories
+                                    Catégories <i className={`fas fa-chevron-${dropdownOuvert ? 'up' : 'down'} ms-1 small`}></i>
                                 </span>
-                                <ul className="dropdown-menu shadow-sm border-0 mt-2">
+                                
+                                {/* On ajoute la classe "show" de Bootstrap si dropdownOuvert est true */}
+                                <ul className={`dropdown-menu shadow-sm border-0 mt-2 ${dropdownOuvert ? 'show' : ''}`} style={{ position: 'absolute', right: 0 }}>
                                     {categories.length > 0 ? (
                                         categories.map((cat) => (
                                             <li key={cat.id}>
@@ -133,7 +135,6 @@ function Header() {
                 </div>
             </nav>
 
-            {/* Barre de recherche déroulante mobile */}
             {rechercheOuverte && !isHomePage && (
                 <div className="bg-light border-top py-3 px-3 d-lg-none shadow-sm position-absolute w-100" style={{ zIndex: 1050, top: '100%' }}>
                     <form className="d-flex" role="search" onSubmit={soumettreRecherche}>
