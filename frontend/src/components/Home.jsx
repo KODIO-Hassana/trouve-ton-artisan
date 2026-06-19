@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Ajout de useNavigate ici
+import { Link, useNavigate } from 'react-router-dom'; 
 
 import { Helmet } from 'react-helmet-async';
 
 function Home() {
-    // 1. LES VARIABLES SONT BIEN À L'INTÉRIEUR DE LA FONCTION
     const [artisansDuMois, setArtisansDuMois] = useState([]);
-    const [recherche, setRecherche] = useState(''); // Pour stocker ce que l'utilisateur tape
-    const navigate = useNavigate(); // L'outil pour changer de page
+    const [recherche, setRecherche] = useState(''); 
+    const navigate = useNavigate(); 
 
     useEffect(() => {
-        // fetch('http://localhost:5000/api/artisans')
-        // fetch('[https://trouve-ton-artisan-najt.onrender.com/api/artisans](https://trouve-ton-artisan-najt.onrender.com/api/artisans)')
         fetch(`https://trouve-ton-artisan-najt.onrender.com/api/artisans`)
             .then(reponse => reponse.json())
             .then(donnees => {
@@ -40,11 +37,9 @@ function Home() {
         );
     };
 
-    // 2. LA FONCTION QUI SE DÉCLENCHE QUAND ON VALIDE LA RECHERCHE
     const soumettreRecherche = (e) => {
-        e.preventDefault(); // Empêche la page de se recharger
+        e.preventDefault(); 
         if (recherche.trim() !== '') {
-            // On redirige vers la page artisans avec le mot-clé dans l'adresse
             navigate(`/artisans?recherche=${recherche}`);
         }
     };
@@ -61,7 +56,6 @@ function Home() {
                         Trouvez l'artisan qu'il vous faut
                     </h1>
                     
-                    {/* 3. LE FORMULAIRE DE RECHERCHE CONNECTÉ */}
                     <form className="mx-auto" style={{ maxWidth: '600px' }} role="search" onSubmit={soumettreRecherche}>
                         <input 
                             className="form-control form-control-lg shadow-sm border-0 py-3 px-4" 
@@ -74,13 +68,11 @@ function Home() {
                 </div>
             </section>
 
-            {/* NOUVELLE SECTION : Comment trouver mon artisan ? */}
+            {/* SECTION: Comment trouver mon artisan ? */}
             <section className="py-5 bg-light">
                 <div className="container">
                     <h2 className="text-center text-primary fw-bold mb-5">Comment trouver mon artisan ?</h2>
                     <div className="row g-4 text-center">
-                        
-                        {/* Étape 1 */}
                         <div className="col-md-4">
                             <div className="bg-white p-4 rounded-3 shadow-sm h-100 border-0">
                                 <i className="fas fa-search fa-3x text-primary mb-3"></i>
@@ -88,8 +80,6 @@ function Home() {
                                 <p className="text-muted mb-0">Parcourez nos catégories (Bâtiment, Services, Fabrication, Alimentation) pour cibler votre besoin.</p>
                             </div>
                         </div>
-
-                        {/* Étape 2 */}
                         <div className="col-md-4">
                             <div className="bg-white p-4 rounded-3 shadow-sm h-100 border-0">
                                 <i className="fas fa-users fa-3x text-primary mb-3"></i>
@@ -97,8 +87,6 @@ function Home() {
                                 <p className="text-muted mb-0">Découvrez les artisans certifiés de la région, consultez leurs spécialités et les avis clients.</p>
                             </div>
                         </div>
-
-                        {/* Étape 3 */}
                         <div className="col-md-4">
                             <div className="bg-white p-4 rounded-3 shadow-sm h-100 border-0">
                                 <i className="fas fa-envelope fa-3x text-primary mb-3"></i>
@@ -106,7 +94,6 @@ function Home() {
                                 <p className="text-muted mb-0">Utilisez notre formulaire de contact sécurisé pour envoyer directement votre demande de devis.</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
@@ -131,7 +118,8 @@ function Home() {
                                             <p className="text-primary fw-bold mb-1">{artisan.metier}</p>
                                             <p className="text-muted small mb-3">{artisan.ville}</p>
                                             
-                                            <p className="text-warning fw-bold mb-0 fs-5">
+                                            {/* ACCESSIBILITÉ AJOUTÉE ICI */}
+                                            <p className="text-warning fw-bold mb-0 fs-5" aria-label={`Note de ${artisan.note} sur 5`} aria-hidden="true">
                                                 {afficherEtoiles(artisan.note)} <span className="text-dark ms-2 fs-6">{artisan.note}/5</span>
                                             </p>
                                             
